@@ -54,6 +54,9 @@ The user now has been authenticated using the Implicit Grant Flow. We got an acc
 Create a POST request which should look something like this: 
 ```https://login.microsoftonline.com/TENANT_ID/oauth2/token```
 
+![**POST** Request to receive SAML Assertion from Azure Active Directory <br> (On Behalf Flow) - Part 1](./img/POSTOnBehalfOfRequest.png)
+
+![**POST** Request to receive SAML Assertion from Azure Active Directory <br> (On Behalf Flow) - Part 2](./img/POSTOnBehalfOfRequest2.png)
 
 |KEY|VALUE|DESCRIPTION|
 |:-----------|:------------------|:---------------------------|
@@ -68,3 +71,5 @@ Create a POST request which should look something like this:
 ## ODATA REST Call
 
 ### **GET** Request using access token to receive the product data from SAP
+
+![**GET** Request using access token to receive the product data from SAP ](./img/GETODATARequestSAP.png)
