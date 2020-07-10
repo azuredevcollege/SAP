@@ -24,7 +24,7 @@ The type of the user must be a *Dialog User*
 In order to be able to connect SAP and AAD, there needs to be a federation configured.
 
 For this you first login with an Admin User:
-- Choose for the Url: https://<SAPNETWEAVER_IP_ADDRESS:44300>/sap/bc/webdynpro/sap/saml2?TRUSTED_PROVIDER_TYPE=OA2#
+- Choose for the Url: https://SAPNETWEAVER_IP_ADDRESS:44300/sap/bc/webdynpro/sap/saml2?TRUSTED_PROVIDER_TYPE=OA2#
 
 ![Login to SAPNetweaver using Admin Account](./img/SAPNetweaverAdminLogIn.png)
 
