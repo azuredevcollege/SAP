@@ -8,6 +8,11 @@ In this part you will configure Azure Active Directory (AAD) to be the working I
 |[Register Enterprise Application (Backend: SAP NetWeaver)]()|What needs to be done|
 |[Configure registered Applications in Azure Active Directory]()|What needs to be done|
 
+1. Authenticate user and get an access token (bearer token) with the OAuth2 Implicit Flow​
+2. Exchange the bearer token with a SAML 2.0 Assertion with the Oauth On Behalf Of Flow <br> (Bearer SAML Assertion Flow)​
+3. Akquire an Oauth bearer token for SAP Odata Service with the SAML Bearer Assertion Flow​
+4. Call SAP Odata service with acquired Bearer Token in Authotization Header​
+
 ## Register Application (Client App)
 
 For the implicit grant flow we need to get an access token from the Azure Active Directory using a client application.
