@@ -4,9 +4,9 @@ In this part you will configure Azure Active Directory (AAD) to be the working I
 
 |Topic|Description|
 |:-----------|:------------------|
-|[Register Application (Client App)]()|What needs to be done|
-|[Register Enterprise Application (Backend: SAP NetWeaver)]()|What needs to be done|
-|[Configure registered Applications in Azure Active Directory]()|What needs to be done|
+|[Register Application (Client App)]()|Registering the frontend application|
+|[Register Enterprise Application (Backend: SAP NetWeaver)]()|Registering the backend application|
+|[Configure registered Applications in Azure Active Directory]()|Configuring the Single Sign On within the registered applications|
 
 1. Authenticate user and get an access token (bearer token) with the OAuth2 Implicit Flow​
 2. Exchange the bearer token with a SAML 2.0 Assertion with the Oauth On Behalf Of Flow <br> (Bearer SAML Assertion Flow)​
@@ -109,3 +109,11 @@ For the on behalf of flow we need to get an SAML assertion from the Azure Active
 5. After all these changes hit *Save*. 
 
 ![SAP Netweaver Application Registration Expose An API](./img/AADSAPAppRegistrationExposeAnAPI.png)
+
+
+## Azure Active Directory Configuration
+|Topic|Description|
+|:-----------|:------------------|
+|[Register Application (Client App)]()|A frontend Application|
+|[Register Enterprise Application (Backend: SAP NetWeaver)]()|What needs to be done|
+|[Configure registered Applications in Azure Active Directory]()|What needs to be done|
