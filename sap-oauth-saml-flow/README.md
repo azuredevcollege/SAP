@@ -46,7 +46,7 @@ To go into the technical details we have summarized the steps of the further int
 1. Authenticate user (Jane Doe, jdoe@contoso.com) and get an *access token (issued by AAD)* <br> with the OAuth2 Implicit Flow​
 2. Exchange the *AAD access token* with a *SAML 2.0 Assertion (issued by AAD)* <br> with the Oauth On Behalf Of Flow (Bearer SAML Assertion Flow)​
 3. Akquire an *OAuth access token (issued by  OAuth Authorization Server of SAP*) for accessing the SAP Netweaver e.g SAP Odata Service by exchanging the SAML Assertion <br> with the SAML Bearer Assertion Flow​
-4. Send a GET or POST to the SAP Netweaver e.g SAP Odata service with acquired *OAuth access token (issued by  OAuth Authorization Server of SAP*) in the Authotization Header​
+4. Send a GET or POST to the SAP Netweaver e.g SAP Odata service with acquired *OAuth access token (issued by OAuth Authorization Server of SAP*) in the Authotization Header​
 
 Below you can redirect to the administrative configuration parts of this documentation.
 1. Firstly you should configure your SAP Netweaver
