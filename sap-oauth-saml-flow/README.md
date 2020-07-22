@@ -15,7 +15,7 @@
 
 Here you can see the final scenario of this solution:
 
-![SAP OAuth SAML Flow](./img/Architecture_BIG.png)
+![SAP OAuth SAML Flow](./img/SAPArchTeams.png)
 
 **Description of the Challenge**
 

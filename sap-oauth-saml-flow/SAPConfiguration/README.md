@@ -24,14 +24,37 @@
 
 ## Generate User
 
-> First you set up a common User ```Jane Doe (JDoe)```between SAP and Active Directory:
+> First you LogIn to your SAP NetWeaver and redirect to the role & rights section by typing the abbreviation <br> for the role maintenance: ```PFCG```
 
-![Set up a common user between SAP and Active Directory - Part 1](./img/SAPNetweaverDialogUserPart1.png)
+![SAP LogIn](./img/SAPNetweaverLogIn.png)
 
-> The type of the user must be a *Dialog User*
-> And the user must be assigned to the role ```SAP_BC_EPM_OIA```
 
-![Set up a common user between SAP and Active Directory - Part 2](./img/SAPNetweaverDialogUserPart2.png)
+> Then you set up a role and a common User ```Jane Doe (JDoe)```between SAP and Active Directory. <br>
+> The type of the user must be a *Dialog User* <br>
+> The role needs some authorizations.
+
+
+![Set up a common user between SAP and Active Directory](./img/SAPNetweaverRoleConfiguration.png)
+
+
+> As the user must be assigned to a role authorized for the scope ```OA2_CLIENT and OA2_Scope``` <br>
+> Hit the ```Authorizations``` button.
+
+
+![Set up a common user between SAP and Active Directory - Part 2](./img/SAPNetweaverRoleConfigurationAuthorization1.png)
+
+> Select the ```Obect class BC_A``` button.
+
+![User Authorization](./img/SAPNetweaverRoleConfigurationAuthorization2.png)
+
+> Open the ```Authorization Object S_SCOPE ``` and the ```Authorization TNL-31000500 ```
+
+![User Authorization](./img/SAPNetweaverRoleConfigurationAuthorization3.png)
+
+> Select the ```OAuth2 Scope``` and the ```OAuth2 Client``` and give the necessary scopes which you need to access.
+> For testing, development purposes we used the "wild card" using the ```*``` in the "From" and "To" areas.
+
+![User Authorization](./img/SAPNetweaverRoleConfigurationAuthorization4.png)
 
 ## Federation between SAP and Azure Active Directory
 
@@ -58,6 +81,8 @@
 > And then you configure the Service-Provider-Settings:
 
 ![SAML Configuration - Part 2](./img/SAPNetweaverSAMLConfigurationPart2.png)
+
+> You can automatically upload the metadata file from the AAD into SAP NetWeaver.
 
 ## Configure Client in SAP
 

@@ -64,6 +64,8 @@ Create a POST request which should look something like this:
 |requested_token_use|on_behalf_of|Specifies how the request should be processed. In the OBO flow, the value must be set to on_behalf_of.|
 |requested_token_type|urn:ietf:params:oauth:token-type:saml2|An identifier, as described in Token Type Identifiers (OAuth 2.0 Token Exchange Section 3), for the type of the requested security token.<br>For example, a JWT can be requested with the identifier "urn:ietf:params:oauth:token-type:jwt".<br>If the requested type is unspecified, the issued token type is at the discretion of the Authorization Server and may be dictated by knowledge of the requirements of the service or resource indicated by the "resource" or "audience" parameter.|
 
+### **POST** Request to exchange the SAML Assertion for the access token from OAuth Authorization Server of SAP
+
 ## ODATA REST Call
 
 ### **GET** Request using access token to receive the product data from SAP
@@ -78,3 +80,7 @@ Create a POST request which should look something like this:
 |[**POST** Request to receive SAML Assertion from Azure Active Directory <br> (On Behalf Flow)]()|What needs to be done|
 |[**POST** Request using SAML Assertion to receive access token from SAP <br>(SAML Bearer Assertion Flow)]()|What needs to be done|
 |[**GET** Request using access token to receive the product data from SAP <br> to view in application]()|What needs to be done|
+
+## Done
+
+> If everything works the challenge is solved! 
