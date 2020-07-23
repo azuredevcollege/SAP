@@ -9,23 +9,20 @@
 
 ## Prerequisites
 
-This SetUp requires the configurations made in [SAP Configuration](././SAPConfiguration/README.md) and [AAD Configuration](././AzureActiveDirectoryConfiguration/README.md). If you haven't already, go back to those steps as you will get errors if the environments are not set up right.
+> This SetUp requires the configurations made in [SAP Configuration](././SAPConfiguration/README.md) and [AAD Configuration](././AzureActiveDirectoryConfiguration/README.md). If you haven't already, go back to those steps as you will get errors if the environments are not set up right.
 
-We are going to use Postman to send our GET- and Post-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool.
+> We are going to use Postman to send our GET- and Post-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool.
 
-Under [Postman_SAP_Oauth_SAML_flow.json]() you will find the importable json file containing the four requests. You can either adapt these or build them yourself.
+> Under [Postman_SAP_Oauth_SAML_flow.json]() you will find the importable json file containing the four requests. You can either adapt these or build them yourself.
 
 ## Implicit Grant Flow
 
 ### **GET** Request to receive access token from Azure Active Directory 
 
-For single-page applications the Microsoft identity platform supports the OAuth 2.0 Implicit Grant flow. This flow is described in the [OAuth 2.0 Specification](https://tools.ietf.org/html/rfc6749#section-4.2). Its primary benefit is that it allows the app to get tokens from Microsoft identity platform without performing a backend server credential exchange. This allows the app to sign in the user, maintain session, and get tokens to other web APIs all within the client JavaScript code.
-
-For now we are going to fetch the access/bearer token to our client application using a GET Request.
-
-To do so, create a GET Request. In the end the URL should look something like this: ´
-
-```https://login.microsoftonline.com/DIRECTORY_ID/oauth2/v2.0/authorize?client_id=CLIENT_ID&response_type=token&redirect_uri=https://localhost:5001/api/tokenechofragment&scope=https://SAML_AAD_CONFIG2/user_impersonation&response_mode=fragment&state=12345&nonce=678910```
+> For single-page applications the Microsoft identity platform supports the OAuth 2.0 Implicit Grant flow. This flow is described in the [OAuth 2.0 Specification](https://tools.ietf.org/html/rfc6749#section-4.2). Its primary benefit is that it allows the app to get tokens from Microsoft identity platform without performing a backend server credential exchange. This allows the app to sign in the user, maintain session, and get tokens to other web APIs all within the client JavaScript code.
+> For now we are going to fetch the access/bearer token to our client application using a GET Request.
+> To do so, create a GET Request. In the end the URL should look something like this: ´
+```https://login.microsoftonline.com/<DIRECTORY_ID>/oauth2/v2.0/authorize?client_id=<CLIENT_ID>&response_type=token&redirect_uri=https://localhost:5001/api/tokenechofragment&scope=https://<Identifier (Entity ID) of SAP Enterprise Application with the AAD>/user_impersonation&response_mode=fragment&state=12345&nonce=678910```
 
 
 ![**GET** Request to receive access token from Azure Active Directory <br>(Implicit Grant Flow)](./img/GETRequesttokenAzureActiveDirectory.png)
@@ -47,9 +44,8 @@ The Params should look like this:
 
 ### **POST** Request to receive SAML Assertion from Azure Active Directory
 
-The OAuth 2.0 On-Behalf-Of flow (OBO) serves the use case where an application invokes a service/web API, which in turn needs to call another service/web API. The idea is to propagate the delegated user identity and permissions through the request chain. For the middle-tier service to make authenticated requests to the downstream service, it needs to secure an access token from the Microsoft identity platform, on behalf of the user.
-
-The user now has been authenticated using the Implicit Grant Flow. We got an access token for the Client application and are now exchanging it against an SAML assertion for the SAP application.
+> The OAuth 2.0 On-Behalf-Of flow (OBO) serves the use case where an application invokes a service/web API, which in turn needs to call another service/web API. The idea is to propagate the delegated user identity and permissions through the request chain. For the middle-tier service to make authenticated requests to the downstream service, it needs to secure an access token from the Microsoft identity platform, on behalf of the user.
+> The user now has been authenticated using the Implicit Grant Flow. We got an access token for the Client application and are now exchanging it against an SAML assertion for the SAP application.
 
 Create a POST request which should look something like this: 
 ```https://login.microsoftonline.com/TENANT_ID/oauth2/token```
@@ -68,6 +64,8 @@ Create a POST request which should look something like this:
 |requested_token_use|on_behalf_of|Specifies how the request should be processed. In the OBO flow, the value must be set to on_behalf_of.|
 |requested_token_type|urn:ietf:params:oauth:token-type:saml2|An identifier, as described in Token Type Identifiers (OAuth 2.0 Token Exchange Section 3), for the type of the requested security token.<br>For example, a JWT can be requested with the identifier "urn:ietf:params:oauth:token-type:jwt".<br>If the requested type is unspecified, the issued token type is at the discretion of the Authorization Server and may be dictated by knowledge of the requirements of the service or resource indicated by the "resource" or "audience" parameter.|
 
+### **POST** Request to exchange the SAML Assertion for the access token from OAuth Authorization Server of SAP
+
 ## ODATA REST Call
 
 ### **GET** Request using access token to receive the product data from SAP
@@ -82,3 +80,7 @@ Create a POST request which should look something like this:
 |[**POST** Request to receive SAML Assertion from Azure Active Directory <br> (On Behalf Flow)]()|What needs to be done|
 |[**POST** Request using SAML Assertion to receive access token from SAP <br>(SAML Bearer Assertion Flow)]()|What needs to be done|
 |[**GET** Request using access token to receive the product data from SAP <br> to view in application]()|What needs to be done|
+
+## Done
+
+> If everything works the challenge is solved! 
