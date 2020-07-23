@@ -105,7 +105,7 @@ For the implicit grant flow we need to get an access token from the Azure Active
 
 > 1. Now we need to expose our API by defining the scope and the application id uri in the implicit grand flow. 
 > 2. Define custom scopes to restrict access to data and functionality protected by the API. 
-> 3. An application that requires access to parts of this API can request that a user or admin consent to one or more of these. For example you can insert as scope <br> ```https://<SAP-IP-ADDRESS>:44300/sap/bc/sec/oauth2/token/user_impersonation```
+> 3. An application that requires access to parts of this API can request that a user or admin consent to one or more of these. For example you can insert as scope <br> ```https://<SAP-IP-ADDRESS>:44300/sap/bc/sec/oauth2/token```
 > 4. Important is to add a client application by adding the *CLIENT ID* from the frontend client application registered earlier and to check the box *Authorized scopes*.  
 > 5. After all these changes hit *Save*. 
 
