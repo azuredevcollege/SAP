@@ -74,12 +74,39 @@ Create a POST request which should look something like this:
 
 ## Postman SetUp
 
+> **Scenario: Frontend Application communicates via API to SAP NetWeaver**
+> 1. Authenticate user (Jane Doe, jdoe@contoso.com) and get an *access token (issued by AAD)* <br> with the OAuth2 Implicit Flow​
+> 2. Exchange the *AAD access token* with a *SAML 2.0 Assertion (issued by AAD)* <br> with the Oauth On Behalf Of Flow (Bearer SAML Assertion Flow)​ <br> but in this scenario token will be redirected from the client to the API. 
+> 3. And the API akquires an *OAuth access token (issued by  OAuth Authorization Server of SAP*) for accessing the SAP Netweaver e.g SAP Odata Service by exchanging the SAML Assertion <br> with the SAML Bearer Assertion Flow​
+> 4. Send a GET or POST to the SAP Netweaver e.g SAP Odata service with acquired *OAuth access token (issued by OAuth Authorization Server of SAP*) in the Authotization Header​
+
+> **GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow)
+
+![**GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow) ](./img/ImplicitGrantFlow_Postman.png)
+
+> **POST** Request to receive SAML Assertion from Azure Active Directory <br> (On Behalf Flow)
+
+![**POST** Request to receive SAML Assertion from Azure Active Directory (On Behalf Flow)](./img/OnBehalfOfFlow_Postman.png)
+
+> **POST** Request using SAML Assertion to receive access token from SAP <br>(SAML Bearer Assertion Flow)
+
+![**POST** Request using SAML Assertion to receive access token from SAP (SAML Bearer Assertion Flow)](./img/SAMLBearerAssertionFlow_Postman.png)
+
+> **GET** Request using access token to receive the product data from SAP <br> to view in application
+
+![**GET** Request using access token to receive the product data from SAP  to view in application](./img/ODATARequest_Postman.png)
+
 |Topic|Description|
 |:-----------|:------------------|
 |[**GET** Request to receive access token from Azure Active Directory <br>(Implicit Grant Flow)]()|What needs to be done|
 |[**POST** Request to receive SAML Assertion from Azure Active Directory <br> (On Behalf Flow)]()|What needs to be done|
 |[**POST** Request using SAML Assertion to receive access token from SAP <br>(SAML Bearer Assertion Flow)]()|What needs to be done|
 |[**GET** Request using access token to receive the product data from SAP <br> to view in application]()|What needs to be done|
+
+
+
+
+ 
 
 ## Done
 
