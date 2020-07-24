@@ -16,10 +16,10 @@
 
 |Topic|Description|
 |:-----------|:------------------|
-|[Generate User]()|A Dialog User needs to be generated in the SAP System.|
-|[Federation between SAP and Azure Active Directory]()|A federation needs to be configured between SAP and Azure Active Directory|
-|[Configure Client in SAP]()|A Client needs to be configured within the SAP|
-|[Configure Scopes in SAP]()|The Scopes need to be configured to be able to access certain OData Services|
+|[Generate User](#generate-user)|A Dialog User needs to be generated in the SAP System.|
+|[Federation between SAP and Azure Active Directory](#federation-between-sap-and-azure-active-directory)|A federation needs to be configured between SAP and Azure Active Directory|
+|[Configure Client in SAP](#configure-client-in-sap)|A Client needs to be configured within the SAP|
+|[Configure Scopes in SAP](#configure-scopes-in-sap)|The Scopes need to be configured to be able to access certain OData Services|
 
 
 ## Generate User
