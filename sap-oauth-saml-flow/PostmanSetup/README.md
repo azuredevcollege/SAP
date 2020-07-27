@@ -1,29 +1,37 @@
 # Postman SetUp
 
-|Topic|Description|
-|:-----------|:------------------|
-|[**GET** Request to receive access token from Azure Active Directory <br>(Implicit Grant Flow)]()|What needs to be done|
-|[**POST** Request to receive SAML Assertion from Azure Active Directory <br> (On Behalf Flow)]()|What needs to be done|
-|[**POST** Request using SAML Assertion to receive access token from SAP <br>(SAML Bearer Assertion Flow)]()|What needs to be done|
-|[**GET** Request using access token to receive the product data from SAP <br> to view in application]()|What needs to be done|
-
 ## Prerequisites
 
-> This SetUp requires the configurations made in [SAP Configuration](././SAPConfiguration/README.md) and [AAD Configuration](././AzureActiveDirectoryConfiguration/README.md). If you haven't already, go back to those steps as you will get errors if the environments are not set up right.
-
-> We are going to use Postman to send our GET- and Post-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool.
-
+> This SetUp requires the configurations made in [SAP Configuration](././SAPConfiguration/README.md) and [AAD Configuration](././AzureActiveDirectoryConfiguration/README.md). <br> 
+> If you haven't already, go back to those steps as you will get errors if the environments are not set up right. <br>
+> We are going to use Postman to send our GET- and Post-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool. <br>
 > Under [Postman_SAP_Oauth_SAML_flow.json]() you will find the importable json file containing the four requests. You can either adapt these or build them yourself.
+
+|Topic|Description|
+|:-----------|:------------------|
+|[**GET** Request to receive access token from Azure Active Directory](#get-request-to-receive-access-token-from-azure-active-directory)|Usage of Implicit Grant Flow|
+|[**POST** Request to receive SAML Assertion from Azure Active Directory](#post-request-to-receive-saml-assertion-from-azure-active-directory)|Usage of On Behalf Flow|
+|[**POST** Request using SAML Assertion to receive access token from SAP](#post-request-to-exchange-the-saml-assertion-for-the-access-token-from-oauth-authorization-server-of-sap)|Receiving SAML Bearer Assertion Flow from the OAuth Authorization Server of SAP|
+|[**GET** Request using access token to receive the product data from SAP to view in application](#get-request-using-access-token-to-receive-the-product-data-from-sap)|REST Call to receive Data from SAP|
 
 ## Implicit Grant Flow
 
 ### **GET** Request to receive access token from Azure Active Directory 
 
-> For single-page applications the Microsoft identity platform supports the OAuth 2.0 Implicit Grant flow. This flow is described in the [OAuth 2.0 Specification](https://tools.ietf.org/html/rfc6749#section-4.2). Its primary benefit is that it allows the app to get tokens from Microsoft identity platform without performing a backend server credential exchange. This allows the app to sign in the user, maintain session, and get tokens to other web APIs all within the client JavaScript code.
-> For now we are going to fetch the access/bearer token to our client application using a GET Request.
-> To do so, create a GET Request. In the end the URL should look something like this: ´
-```https://login.microsoftonline.com/<DIRECTORY_ID>/oauth2/v2.0/authorize?client_id=<CLIENT_ID>&response_type=token&redirect_uri=https://localhost:5001/api/tokenechofragment&scope=https://<Identifier (Entity ID) of SAP Enterprise Application with the AAD>/user_impersonation&response_mode=fragment&state=12345&nonce=678910```
+> For single-page applications the Microsoft identity platform supports the OAuth 2.0 Implicit Grant flow. This flow is described in the [OAuth 2.0 Specification](https://tools.ietf.org/html/rfc6749#section-4.2). <br>
+> Its primary benefit is that it allows the app to get tokens from Microsoft identity platform without performing a backend server credential exchange. <br>
+> This allows the app to sign in the user, maintain session, and get tokens to other web APIs all within the client JavaScript code. <br>
+> For now we are going to fetch the access/bearer token to our client application using a GET Request. <br>
 
+> To do so, create a GET Request. In the end the URL should look something like this: 
+```
+                        https://login.microsoftonline.com/<DIRECTORY_ID>/oauth2/v2.0/authorize?client_id=<CLIENT_ID>&response_type=token&
+                        redirect_uri=https://localhost:5001/api/tokenechofragment&
+                        scope=https://<Identifier (Entity ID) of SAP Enterprise Application with the AAD>/user_impersonation&
+                        response_mode=fragment&state=12345&nonce=678910
+
+
+```
 
 ![**GET** Request to receive access token from Azure Active Directory <br>(Implicit Grant Flow)](./img/GETRequesttokenAzureActiveDirectory.png)
 
@@ -80,33 +88,35 @@ Create a POST request which should look something like this:
 > 3. And the API akquires an *OAuth access token (issued by  OAuth Authorization Server of SAP*) for accessing the SAP Netweaver e.g SAP Odata Service by exchanging the SAML Assertion <br> with the SAML Bearer Assertion Flow​
 > 4. Send a GET or POST to the SAP Netweaver e.g SAP Odata service with acquired *OAuth access token (issued by OAuth Authorization Server of SAP*) in the Authotization Header​
 
-> **GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow)
+> **GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow) <br>
+> - For the **Client ID** we use the *frontend angular application client id* <br>
+> - For the **scope** we use this time the *scope from the API APP* <br>
+> - And we should receive via pasting the URL from Postman into an Browser an *access token* starting with ```ey...```.
 
 ![**GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow) ](./img/ImplicitGrantFlow_Postman.png)
 
 > **POST** Request to receive SAML Assertion from Azure Active Directory <br> (On Behalf Flow)
+> In this scenario we use everything from the POST Request (On Behalf Flow) above besides: <br>
+> 1. **API APP Client ID** we use the *from the API APP client id* <br>
+> 2. **API APP Secret** we use the *from the API APP secret* <br>
+> 3. Then we insert the access token received from the previous REST Call (GET) <br>
+> 4. And we should receive a *SAML assertion* as result. 
 
 ![**POST** Request to receive SAML Assertion from Azure Active Directory (On Behalf Flow)](./img/OnBehalfOfFlow_Postman.png)
 
-> **POST** Request using SAML Assertion to receive access token from SAP <br>(SAML Bearer Assertion Flow)
+> **POST** Request using SAML Assertion to receive access token from SAP <br>(SAML Bearer Assertion Flow) <br>
+> - Here we are using the CLient Name e.g. **CLIENT1** <br>
+> - We paste the SAML assertion from the previous REST Call (POST). <br>
+> - And we insert the scope to which data in SAP we want access to. <br>
+> - And we should receive an *access token* as result. 
 
 ![**POST** Request using SAML Assertion to receive access token from SAP (SAML Bearer Assertion Flow)](./img/SAMLBearerAssertionFlow_Postman.png)
 
-> **GET** Request using access token to receive the product data from SAP <br> to view in application
+> **GET** Request using access token to receive the product data from SAP <br> to view in application <br>
+> - Here we insert the **access token** from the previous REST Call (POST). <br>
+> - And we should receive *access to the data* as result. 
 
 ![**GET** Request using access token to receive the product data from SAP  to view in application](./img/ODATARequest_Postman.png)
-
-|Topic|Description|
-|:-----------|:------------------|
-|[**GET** Request to receive access token from Azure Active Directory <br>(Implicit Grant Flow)]()|What needs to be done|
-|[**POST** Request to receive SAML Assertion from Azure Active Directory <br> (On Behalf Flow)]()|What needs to be done|
-|[**POST** Request using SAML Assertion to receive access token from SAP <br>(SAML Bearer Assertion Flow)]()|What needs to be done|
-|[**GET** Request using access token to receive the product data from SAP <br> to view in application]()|What needs to be done|
-
-
-
-
- 
 
 ## Done
 
