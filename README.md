@@ -8,4 +8,4 @@ Consider this as a constant "work-in-progress" repository.
 
 |Topic|Description|
 |:-----------|:------------------|
-|[SAP OAuth SAML Flow](sap-oauth-saml-flow/README.md)|Azure Active Directory Identity connecting seamlessly to SAP Odata Service|
+|[SAP OAuth SAML Flow](sap-oauth-saml-flow/README.md)|Azure Active Directory Identity connecting seamlessly to SAP Odata Services|

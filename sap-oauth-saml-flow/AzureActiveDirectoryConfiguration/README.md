@@ -1,6 +1,6 @@
 # Azure Active Directory Configuration
 
-In this part you will configure Azure Active Directory (AAD) to be the working Identity Provider (IDP) for our Azure Client Application (Frontend), API Application and SAP NetWeaver.
+In this part you will configure Azure Active Directory (AAD) to be the working Identity Provider (IDP) for our frontend Azure Client Application (Angluar FE), API Application and SAP NetWeaver.
 
 |Topic|Description|
 |:-----------|:------------------|
@@ -11,7 +11,7 @@ In this part you will configure Azure Active Directory (AAD) to be the working I
 > ### Introduction 
 
 > The following steps register the two applications in AAD:
-> 1. The first app registration for the frontend web app enables authentication for the user in AAD
+> 1. The first app registration for the frontend web app enables authentication for the user in the AAD.
 > 2. The second app registration represents SAP Netweaver with the backend service and is required to support the On-behalf-of flow to request the SAML assertion. This app will be registered as an enterprise application from the AAD Gallery
 
 > The following steps need an access token and a SAML assertion issued by the AAD:
@@ -27,7 +27,7 @@ In this part you will configure Azure Active Directory (AAD) to be the working I
 > 4. Create a New registration
 > 5. The settings should look as follows
 > 6. Select *Register*
-> 7. Save the application (client) ID to a notepad. Name it, as there are going to be a bunch of ids at the end.
+> 7. Save the application (client) ID to a notepad. As we will have a bunch of ids in the Postman scenario, try to label each while saving it to the notepad.
 
 ![Frontend App Registration](./img/AADClientAppRegistration.png)
 
@@ -62,6 +62,12 @@ In this part you will configure Azure Active Directory (AAD) to be the working I
 
 ![Frontend App Registration - Expose an API](./img/AADClientAppRegistrationExposeAnAPI.png)
 
+> ### Download the Federation metadata document
+> 1. We are now going to download the federation metadata document as we are going to need it later on in the SAP configuration. <br> Navigate to *Overview* of your Angular FE/Client Application registered in the AAD.
+> 2. Select Endpoints.
+> 3. Copy the **federation metadata document url** and save it to the notepad.
+
+![Federation metadata document](./img/AADCLIENTAPPmetadata.png)
 
 ## Register Application (API App)
 
@@ -92,7 +98,7 @@ For the implicit grant flow you need to get an access token from the Azure Activ
 
 > ### Expose an API of the API Application
 > 1. Now we need to expose our API by defining the scope for the implicit grand flow. Navigate to *Expose an API*.
-> 2. *Add a scopre* that looks like this: <br> ```api://<API-APP-ID>/impersonate```. <br>
+> 2. *Add a scope* that looks like this: <br> ```api://<API-APP-ID>/impersonate```. <br>
 > 3. *Add a client application* and enter the Client Applications ID saved to the notepad in the last section. Check the box *Authorized scopes*.
 > 4. After the changes hit *Save*. 
 
@@ -101,7 +107,7 @@ For the implicit grant flow you need to get an access token from the Azure Activ
 
 ## Register Enterprise Application (Backend: SAP NetWeaver)
 
-> For the on behalf of flow we need to get a SAML assertion from the Azure Active Directory using a SAP NetWeaver as enterprise application.
+> To get access to the SAP ODATA Services seamlessly we configure the Azure Active Directory using a SAP NetWeaver as enterprise application.
 > This is important due to the goal and ability of enabling Single Sign On.
 
 > Please proceed with the following steps:
@@ -166,4 +172,4 @@ For the implicit grant flow you need to get an access token from the Azure Activ
 
 ## Next Steps
 
-Now let's test the scenario and jump into the section for setting up [Postman](../PostmanSetup/README.md)
+> Now let's jump into the section for [configuring SAP](../SAPConfiguration/README.md).
