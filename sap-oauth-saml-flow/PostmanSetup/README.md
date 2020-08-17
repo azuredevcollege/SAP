@@ -1,11 +1,6 @@
-# Specific Postman Scenario using an API
+# Postman SetUp
 
-## Prerequisites
-
-> This SetUp requires the configurations made in [SAP Configuration](././SAPConfiguration/README.md) and [AAD Configuration](././AzureActiveDirectoryConfiguration/README.md). <br> 
-> If you haven't already, go back to those steps as you will get errors if the environments are not set up right. <br>
-> We are going to use Postman to send our GET- and Post-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool. <br>
-> Under [Postman_SAP_Oauth_SAML_flow.json]() you will find the importable json file containing the four requests. You can either adapt these or build them yourself.
+We will set up Postman to receive all necessary tokens to send an ODATA Request against our SAP NetWeaver.
 
 |Topic|Description|
 |:-----------|:------------------|
@@ -14,14 +9,20 @@
 |[**POST** Request using SAML Assertion to receive access token from SAP](#post-request-to-exchange-the-saml-assertion-for-the-access-token-from-oauth-authorization-server-of-sap)|Receiving SAML Bearer Assertion Flow from the OAuth Authorization Server of SAP|
 |[**GET** Request using access token to receive the product data from SAP to view in application](#get-request-using-access-token-to-receive-the-product-data-from-sap)|REST Call to receive Data from SAP|
 
+## Prerequisites
 
-## Postman SetUp
+> This SetUp requires the configurations made in [SAP Configuration](././SAPConfiguration/README.md) and [AAD Configuration](././AzureActiveDirectoryConfiguration/README.md). <br> 
+> If you haven't already, go back to those steps as you will get errors if the environments are not set up right. <br>
+> We are going to use Postman to send our GET- and Post-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool. <br>
+> Under [Postman_SAP_Oauth_SAML_flow.json]() you will find the importable json file containing the four requests. You can either adapt these or build them yourself.
+
+## Process
 
 > **Scenario: Frontend Application communicates via API to SAP NetWeaver**
 > 1. Authenticate user (Jane Doe, jdoe@contoso.com) and get an *access token (issued by AAD)* <br> with the OAuth2 Implicit Flow​
 > 2. Exchange the *AAD access token* with a *SAML 2.0 Assertion (issued by AAD)* <br> with the Oauth On Behalf Of Flow (Bearer SAML Assertion Flow)​ <br> but in this scenario token will be redirected from the client to the API. 
-> 3. And the API akquires an *OAuth access token (issued by  OAuth Authorization Server of SAP*) for accessing the SAP Netweaver e.g SAP Odata Service by exchanging the SAML Assertion <br> with the SAML Bearer Assertion Flow​
-> 4. Send a GET or POST to the SAP Netweaver e.g SAP Odata service with acquired *OAuth access token (issued by OAuth Authorization Server of SAP*) in the Authotization Header​
+> 3. The API akquires an *OAuth access token (issued by  OAuth Authorization Server of SAP*) for accessing the SAP Netweaver e.g SAP Odata Service by exchanging the SAML Assertion <br> with the SAML Bearer Assertion Flow​
+> 4. Send a GET or POST to the SAP Netweaver e.g SAP Odata service with the acquired *OAuth access token (issued by OAuth Authorization Server of SAP*) in the Authotization Header​
 
 > **GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow) <br>
 > - For the **Client ID** we use the *frontend angular application client id* <br>
@@ -96,17 +97,27 @@ Create a POST request which should look something like this:
 
 ## SAML Bearer Assertion 
 
-### **POST** Request to exchange the SAML Assertion for the access token from OAuth Authorization Server of SAP
+>### **POST** Request to exchange the SAML Assertion for the access token from OAuth Authorization Server of SAP
 
-> **POST** Request using SAML Assertion to receive access token from SAP <br>(SAML Bearer Assertion Flow) <br>
-> - Here we are using the CLient Name e.g. **CLIENT1** <br>
-> - We paste the SAML assertion from the previous REST Call (POST). <br>
-> - And we insert the scope to which data in SAP we want access to. <br>
-> - And we should receive an *access token* as result. 
+**1.** Create a new POST Request in Postman. It should look like this:
+```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/bc/sec/oauth2/token``` <br>
+**2.** Fill the *Body* as follows:
 
-> **TO DO -> Description + TABELLE**
+>![**POST** Request using SAML Assertion to receive access token from SAP (SAML Bearer Assertion Flow)](./img/SAMLBearerAssertionFlow_Postman.png)
 
-![**POST** Request using SAML Assertion to receive access token from SAP (SAML Bearer Assertion Flow)](./img/SAMLBearerAssertionFlow_Postman.png)
+>|KEY|VALUE|DESCRIPTION|
+>|:-----------|:------------------|:---------------------------|
+>|client_id|SAP Client name|During the SAP Set-Up a client was created. It should be named Client1 or Client_1. Enter this name here.|
+>|grant_type|urn:ietf:params:oauth:grant-type:saml2-bearer|Define the grant type to be SAML 2.0 Bearer assertion. This was also set up earlier in the AAD.|
+>|assertion|SAML 2.0 Assertion|The SAML 2.0 assertion from the previour REST Call will have the correct audience and recipient to exchange the assertion with an access token.|
+>|scope|SAP ODATA scope|To receive the right access token to the scope created in SAP, list it here.|
+
+**3.** Under *Authorization* enter the client_id with its secret/password.
+
+>![**POST** Request using SAML Assertion to receive access token from SAP - SAP Client Authorization](./img/SAMLBearerAssertionFlow_Authorization.png)
+
+**4.** Send the POST request and save the received access token to the notepad.
+
 
 ## ODATA REST Call
 
