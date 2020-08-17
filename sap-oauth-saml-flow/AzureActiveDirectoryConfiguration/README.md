@@ -101,7 +101,10 @@ For the implicit grant flow you need to get an access token from the Azure Activ
 
 ## Register Enterprise Application (Backend: SAP NetWeaver)
 
-> For the on behalf of flow we need to get an SAML assertion from the Azure Active Directory using a SAP NetWeaver as enterprise application.
+> For the on behalf of flow we need to get a SAML assertion from the Azure Active Directory using a SAP NetWeaver as enterprise application.
+> This is important due to the goal and ability of enabling Single Sign On.
+
+> Please proceed with the following steps:
 
 > 1. Navigate to *Enterprise applications* under *Azure Active Directory*
 > 2. Create a *New application*

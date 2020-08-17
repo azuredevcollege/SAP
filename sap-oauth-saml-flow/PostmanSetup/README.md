@@ -13,7 +13,7 @@ We will set up Postman to receive all necessary tokens to send an ODATA Request 
 
 > This SetUp requires the configurations made in [SAP Configuration](././SAPConfiguration/README.md) and [AAD Configuration](././AzureActiveDirectoryConfiguration/README.md). <br> 
 > If you haven't already, go back to those steps as you will get errors if the environments are not set up right. <br>
-> We are going to use Postman to send our GET- and Post-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool. <br>
+> We are going to use Postman to send our GET- and Post-Requests (REST-CALL), please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool. <br>
 > Under [Postman_SAP_Oauth_SAML_flow.json]() you will find the importable json file containing the four requests. You can either adapt these or build them yourself.
 
 ## Process
@@ -116,20 +116,30 @@ Create a POST request which should look something like this:
 
 >![**POST** Request using SAML Assertion to receive access token from SAP - SAP Client Authorization](./img/SAMLBearerAssertionFlow_Authorization.png)
 
-**4.** Send the POST request and save the received access token to the notepad.
+**4.** Send the POST request and save the received **access token** to the notepad.
 
 
 ## ODATA REST Call
 
 ### **GET** Request using Bearer access token to receive the product data from SAP
 
-> **GET** Request using access token to receive the product data from SAP <br> to view in application <br>
+> Now we will perform a **GET** Request using an access token to receive the product data from SAP <br> to view in application <br>
 > - Here we insert the **access token** from the previous REST Call (POST). <br>
 > - And we should receive *access to the data* as result. 
 
-> **TO DO -> Description + TABELLE**
+The process will be performed as follows:
 
-![**GET** Request using access token to receive the product data from SAP  to view in application](./img/ODATARequest_Postman.png)
+**1.** Create a new GET Request in Postman. It should look like this:
+![**GET** Request using access token to receive the product data from SAP  to view in application](./img/ODATARequest_Postman.png) <br>
+**2.** Fill the *Header* as follows:
+
+>|KEY|VALUE|DESCRIPTION|
+>|:-----------|:------------------|:---------------------------|
+>|authorization|Bearer **access token** from earlier POST |
+
+**3.** And the Result should look like this:
+
+![**GET** ODATA Request - Final Result](./img/GETODATARequestSAPFinalResult.png)
 
 ## Done
 
