@@ -139,7 +139,6 @@ Please proceed with the following steps:
 <br>
 
 ### Single Sign-On configuration of the SAP Application
-<br>
 
 The final **Single Sign-On** setup should look like this:
 <br>
