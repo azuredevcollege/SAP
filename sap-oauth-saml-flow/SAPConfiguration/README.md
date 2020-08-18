@@ -15,14 +15,14 @@ First you will set up SAP to configure the federation between SAP and AAD.
 
 ## Generate User
 
-1. Login to the SAP NetWeaver and redirect to the role & rights section by typing the abbreviation for the role maintenance: <br>
+1. Login to the SAP NetWeaver and redirect to the role & rights section by typing the abbreviation for the role maintenance:
 ```/nPFCG```
 
 ![SAP LogIn](./img/SAPNetweaverLogIn.png)
 
 
 2. Set up a role and a user ```Jane Doe (JDoe)``` which is known by SAP and by the AAD. <br>
-The type of the user must be a *Dialog User*.<br>
+The type of the user must be a **Dialog User**.<br>
 The role needs some authorizations.
 
 
@@ -39,13 +39,13 @@ The role needs some authorizations.
 ![User Authorization](./img/SAPNetweaverRoleConfigurationAuthorization2.png)
 
 
-5. Open the ```Authorization Object S_SCOPE ``` and the ```Authorization TNL-31000500 ```.
+5. Open the ```Authorization Object S_SCOPE ``` and the ```Authorization TNL-31000500```. <br>
 The user must be assigned to a role authorized for the scopes ```OA2_CLIENT``` and ```OA2_Scope```. <br>
 
 ![User Authorization](./img/SAPNetweaverRoleConfigurationAuthorization3.png)
 
-6. Select the ```OAuth2 Scope``` and the ```OAuth2 Client``` and give the necessary scopes which you need to access.
-For testing, development purposes we used the "wild card" using the ```*``` in the *From* and *To* areas.
+6. Select the ```OAuth2 Scope``` and the ```OAuth2 Client``` and give the necessary scopes which you need to access. <br>
+For testing, development purposes we used the "wild card" using the ```*``` in the **From** and **To** areas.
 
 ![User Authorization](./img/SAPNetweaverRoleConfigurationAuthorization4.png)
 
@@ -53,14 +53,14 @@ For testing, development purposes we used the "wild card" using the ```*``` in t
 
 In order to be able to connect SAP and AAD, there needs to be a federation configured.<br>
 In this part you will configure SAP to trust AAD: <br>
-1. For the login use the *Admin User Account*: <br>
+1. For the login use the **Admin User Account**: <br>
    - Use the following Url: <br> ```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/bc/webdynpro/sap/saml2?TRUSTED_PROVIDER_TYPE=OA2#```
 
 ![Login to SAPNetweaver using Admin Account](./img/SAPNetweaverAdminLogIn.png)
 
 2. Then configure as follows:
     1. Choose the OAuth-2.0-Identity-Provider: <br> ``` https://sts.windows.net/<AAD_TENANT_ID> ```
-    2. Configure the NameID format to: *E-mail*
+    2. Configure the NameID format to: **E-mail**
 
 ![Federation between SAP and Azure Active Directory](./img/SAPNetWeaverTruststellungAAD.png)
 
@@ -80,11 +80,11 @@ In this part you will configure SAP to trust AAD: <br>
 
 1. First login into SAP by using the following Client Url: ```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/bc/webdynpro/sap/oauth2_config#``` <br>
 2. Add a new OAuth Client which represents the Application Client from the SAP side:
-    1. Fill in a *OAuth-2.0-Client-ID* and name it e.g. CLIENT1
-    2. Check the box *SAML-2.0-Inhaber*
-    3. Check the box *Aktualisieren*
-    4. Make sure that the box *attribute client_id* is **not** checked
-    5. Configure the trustworthy Identityprovider: *OAuth-2.0-IdP*: <br>
+    1. Fill in a **OAuth-2.0-Client-ID** and name it e.g. CLIENT1
+    2. Check the box **SAML-2.0-Inhaber**
+    3. Check the box **Aktualisieren**
+    4. Make sure that the box **attribute client_id** is **not** checked
+    5. Configure the trustworthy Identityprovider: **OAuth-2.0-IdP**: <br>
     ``` https://sts.windows.net/<AAD_TENANT_ID> ```
 
 ![Configure Client in SAP NetWeaver](./img/SAPNetweaverClientSetup.png)

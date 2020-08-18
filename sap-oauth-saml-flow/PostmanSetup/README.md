@@ -19,10 +19,10 @@ This SetUp requires the configurations made in [AAD Configuration](././AzureActi
 ## Process
 
 **Scenario: Frontend Application communicates via API to SAP NetWeaver**
-1. Authenticate user (Jane Doe, jdoe@contoso.com) and get an *access token (issued by AAD)* <br> with the OAuth2 Implicit Flow​
-2. Exchange the *AAD access token* with a *SAML 2.0 Assertion (issued by AAD)* <br> with the Oauth On Behalf Of Flow (Bearer SAML Assertion Flow)​ <br> but in this scenario token will be redirected from the client to the API. 
-3. The API acquires an *OAuth access token (issued by  OAuth Authorization Server of SAP*) for accessing the SAP Netweaver e.g SAP Odata Service by exchanging the SAML Assertion <br> with the SAML Bearer Assertion Flow​
-4. Send a GET to the SAP Netweaver e.g SAP ODATA service with the acquired *OAuth access token (issued by OAuth Authorization Server of SAP*) in the Authotization Header​
+1. Authenticate user (Jane Doe, jdoe@contoso.com) and get an **access token** (issued by AAD) <br> with the OAuth2 Implicit Flow​
+2. Exchange the **AAD access token** with a **SAML 2.0 Assertion** (issued by AAD) <br> with the Oauth On Behalf Of Flow (Bearer SAML Assertion Flow)​ <br> but in this scenario token will be redirected from the client to the API. 
+3. The API acquires an **OAuth access token** (issued by  OAuth Authorization Server of SAP) for accessing the SAP Netweaver e.g SAP Odata Service by exchanging the SAML Assertion <br> with the SAML Bearer Assertion Flow​
+4. Send a GET to the SAP Netweaver e.g SAP ODATA service with the acquired **OAuth access token** (issued by OAuth Authorization Server of SAP) in the Authotization Header​
 
 ## Implicit Grant Flow
 
@@ -35,12 +35,7 @@ This SetUp requires the configurations made in [AAD Configuration](././AzureActi
 
 To do so, create a GET Request. In the end the URL should look something like this: 
 ```
-                        https://login.microsoftonline.com/<DIRECTORY_ID>/oauth2/v2.0/authorize?client_id=<CLIENT_ID>&response_type=token&
-                        redirect_uri=https://localhost:5001/api/tokenechofragment&
-                        scope=https://<Identifier (Entity ID) of SAP Enterprise Application with the AAD>/user_impersonation&
-                        response_mode=fragment&state=12345&nonce=678910
-
-
+https://login.microsoftonline.com/<DIRECTORY_ID>/oauth2/v2.0/authorize?client_id=<CLIENT_ID>&response_type=token&redirect_uri=https://localhost:5001/api/tokenechofragment&scope=https://<Identifier (Entity ID) of SAP Enterprise Application with the AAD>/user_impersonation&response_mode=fragment&state=12345&nonce=678910
 ```
 
 ![**GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow) ](./img/ImplicitGrantFlow_Postman.png)
@@ -59,12 +54,12 @@ The Params should look like this:
 
 
 **GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow) <br>
-1. For the **Client ID** we use the *frontend angular application client id* <br>
-2. For the **scope** we use this time the *scope from the API APP* <br>
-3.  By pasting the URL from Postman into a Browser we will receive an *access token*, starting with ```ey...```.
-4.  **IMPORTANT:** If the website or in this case *https://localhost:5001/* is not displaying a real website, that is still correct.
+1. For the **Client ID** we use the **frontend angular application client id** <br>
+2. For the **scope** we use the **scope from the API APP** <br>
+3.  By pasting the URL from Postman into a Browser we will receive an **access token**, starting with ```ey...```.
+4.  **IMPORTANT:** If the website or in this case **https://localhost:5001/** is not displaying a real website, that is still correct.
 5.  Our goal is to receive the **access token** using the browser technologies.
-6.  Be sure to copy the entire access token until the *&token_type* appears to the notepad. Be aware that it will expire. You can see that in the response behing *expires_in*.
+6.  Be sure to copy the entire access token until the **&token_type** appears to the notepad. Be aware that it will expire. You can see that in the response behing **expires_in**.
 
 ![Access token](./img/GETIMPLICITGRANT_URL.png)
 
@@ -116,7 +111,7 @@ The Params should look like this:
 |assertion|SAML 2.0 Assertion|The SAML 2.0 assertion from the previour REST Call will have the correct audience and recipient to exchange the assertion with an access token.|
 |scope|SAP ODATA scope|To receive the right access token to the scope created in SAP, list it here.|
 
-3. Under *Authorization* enter the client_id with its secret/password.
+3. Under **Authorization** enter the client_id with its secret/password.
 
 ![**POST** Request using SAML Assertion to receive access token from SAP - SAP Client Authorization](./img/SAMLBearerAssertionFlow_Authorization.png)
 
@@ -137,11 +132,11 @@ The process will be performed as follows:
 
 1. Create a new GET Request in Postman. It should look like this:
 ![**GET** Request using access token to receive the product data from SAP  to view in application](./img/ODATARequest_Postman.png) <br>
-2. Fill the *Header* as follows:
+2. Fill the **Header** as follows:
 
 |KEY|VALUE|DESCRIPTION|
 |:-----------|:------------------|:---------------------------|
-|authorization|Bearer **access token** (from earlier POST) |Bearer access token is a security token that grants the “bearer” access to a protected resource. As this token is received by the authorization server of SAP, it grants access to the SAP Data.|
+|authorization|Bearer **access token** (from earlier POST) |Bearer access token is a security token that grants the **“bearer”** access to a protected resource. As this token is received by the authorization server of SAP, it grants access to the SAP Data.|
 
 3. And the Result should look like this:
 
@@ -153,7 +148,7 @@ The process will be performed as follows:
  Don't forget to delete all resources if you do not need them anymore.
 
 ### Azure Portal
-1. Navigate to the azure portal --> Azure Active Directory --> Registrated Applications
+1. Navigate to the Azure Active Directory in the Azure Portal and select the Registered Applications. Select the button to show all applications.
 2. Delete the SAPNetWeaver Application, the Client Application (AngularFE) and the API Application.
 
 ### PowerShell
