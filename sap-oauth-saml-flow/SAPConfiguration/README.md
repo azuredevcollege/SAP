@@ -103,6 +103,6 @@ In this part you will configure SAP to trust AAD: <br>
 Now let's test the scenario and jump into the section for setting up [Postman](../PostmanSetup/README.md)
 
 
-# References
+## References
 https://wiki.scn.sap.com/wiki/display/Security/Using+OAuth+2.0+from+a+Web+Application+with+SAML+Bearer+Assertion+Flow
 https://blogs.sap.com/2020/07/17/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp/
