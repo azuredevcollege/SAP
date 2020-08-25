@@ -59,7 +59,7 @@ In this part you will configure SAP to trust AAD: <br>
 ![Login to SAPNetweaver using Admin Account](./img/SAPNetweaverAdminLogIn.png)
 
 2. Then configure as follows:
-    1. Choose the OAuth-2.0-Identity-Provider: <br> ``` https://sts.windows.net/<AAD_TENANT_ID> ```
+    1. Insert the OAuth-2.0-Identity-Provider: <br> ``` https://sts.windows.net/<AAD_TENANT_ID> ```
     2. Configure the NameID format to: **E-mail**
 
 ![Federation between SAP and Azure Active Directory](./img/SAPNetWeaverTruststellungAAD.png)
@@ -93,7 +93,7 @@ In this part you will configure SAP to trust AAD: <br>
 
 1. Configure the Scope and select the correct target. <br>
 *(Scroll down the current page.)* <br>
-2. In our sample we are using: <br>
+2. In our sample we are using this in Postman: <br>
 ```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/opu/odata/iwbep/GWSAMPLE_BASIC/ProductSet```
 
 ![Configure Scope in SAP NetWeaver](./img/SAPNetweaverScope.png)

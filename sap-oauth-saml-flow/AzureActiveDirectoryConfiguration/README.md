@@ -21,7 +21,7 @@ In this part we will configure Azure Active Directory (AAD) to be the working Id
 2. Navigate to **Azure Active Directory** via the menu or the global search
 3. Select **App registrations** in the left bar
 4. Create a New registration
-5. The settings should look as follows
+5. Insert a **name** e.g. *Frontend* and leave all the settings as **default**
 6. Select **Register**
 7. Save the application (client) ID to a notepad. As we will have a bunch of ids in the Postman scenario, try to label each while saving it to the notepad.
 
@@ -52,7 +52,7 @@ A secret is a string that the application uses to prove its identity when reques
 
 ### Expose an API of the Client Application
 1. Now we need to expose our API by defining the scope for the implicit grand flow. Navigate to **Expose an API**.
-2. Define custom scopes to restrict access to data and functionality protected by the API. An application that requires access to parts of this API can request that a user or admin has to consent to one or more of these scopes. For example you can insert as scope: <br> ```api://<CLIENT_APP_ID>/read```. <br>
+2. Define custom scopes to restrict access to data and functionality protected by the API. An application that requires access to parts of this API can request that a **user or admin has to consent** to one or more of these scopes. Check **Admins and Users**. For example you can insert as scope: <br> ```api://<CLIENT_APP_ID>/read```. <br>
 You are free to enter more descriptive names and descriptions.
 4. After the changes hit **Save**. 
 
@@ -60,7 +60,7 @@ You are free to enter more descriptive names and descriptions.
 
 ### Download the Federation metadata document
 1. We are now going to download the federation metadata document as we are going to need it later on in the SAP configuration. <br> Navigate to **Overview** of your Angular FE/Client Application registered in the AAD.
-2. Select Endpoints.
+2. Select **Endpoints**.
 3. Copy the **federation metadata document url** and save it to the notepad.
 
 ![Federation metadata document](./img/AADCLIENTAPPmetadata.png)
@@ -70,8 +70,8 @@ You are free to enter more descriptive names and descriptions.
 For the implicit grant flow you need to get an access token from the Azure Active Directory using an API application.
 1. Navigate to **Azure Active Directory** via the menu or the global search
 2. Select **App registrations** in the left bar
-3. Create a New registration
-4. The settings should look as follows
+3. Create a **New registration**
+4. Insert a **name** e.g. *Frontend* and leave all the settings as **default**
 5. Select **Register**
 6. Save the application (client) ID to a notepad
 
@@ -79,9 +79,10 @@ For the implicit grant flow you need to get an access token from the Azure Activ
 
 ### Configure the authentication settings of the API Application
 1. As next step we need to configure the authentication of the API app. Hit the **Authentication** button on the left bar.
-2. Check the boxes of **Access tokens** and **ID tokens**.
-3. Select **Accounts in this organizational directory only (<ACCOUNT> only - Single tenant)**
-4. After all these changes hit **Save**. 
+2. **Add the plattform** and choose the **Web** Template
+3. Check the boxes of **Access tokens** and **ID tokens**.
+4. Select **Accounts in this organizational directory only (<ACCOUNT> only - Single tenant)**
+5. After all these changes hit **Save**. 
 
 ![API App Registration - Authentication](./img/APIAADAuthentication2.png)
 
@@ -93,8 +94,9 @@ For the implicit grant flow you need to get an access token from the Azure Activ
 3. Copy the value of the client secret to a notepad.
 
 ### Expose an API of the API Application
-1. Now we need to expose our API by defining the scope for the implicit grand flow. Navigate to *Expose an API*.
-2. **Add a scope** that looks like this: <br> ```api://<API-APP-ID>/impersonate```. <br>
+1. Now we need to expose our API by defining the scope for the implicit grand flow. Navigate to **Expose an API**.
+2. Accept the **default** value in the **Application ID Uri**
+3. **Add a scope** that looks like this: <br> ```api://<API-APP-ID>/impersonate```.  And check the box **Admins and Users**. <br> 
 3. **Add a client application** and enter the Client Applications ID saved to the notepad in the last section. Check the box **Authorized scopes**.
 4. After the changes hit **Save**. 
 
@@ -118,15 +120,26 @@ Please proceed with the following steps:
 
 ### Configure Single Sign-On (Basic SAML Configuration) of the SAP Application
 1. Select **Single sign-on** in the left bar. 
-2. Click on the **Edit** Button of the **Basic SAML Configuration** Tab. Please insert the following Reply URL: <br> ```https://<SAP-IP-ADDRESS>:44300/sap/bc/sec/oauth2/token``` and ```https://<SAP-IP-ADDRESS>:44300/sap/saml2/sp/asc/100```.
-3. After all these changes hit **Save**. 
+2. Select **SAML** Tile 
+3. Click on the **Edit** Button of the **Basic SAML Configuration** Tab. 
+4. Please insert an **Entity ID** should be equal to the **Provider-Name** of your SAP Netweaver 
+5. Please insert the following Reply URL: <br> ```https://<SAP-IP-ADDRESS>:44300/sap/bc/sec/oauth2/token``` and ```https://<SAP-IP-ADDRESS>:44300/sap/saml2/sp/asc/100```
+6. Please insert the following Sign on URL ```https://<SAP-IP-ADDRESS>:44300/sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchpad.html```
+7. After all these changes hit **Save**. 
+
+> We used as SSL Port **44300** if you have a different Port in your scenario, just adapt the URL.
+> For the **Entity ID** you should choose the **Provider-Name** of your SAP Netweaver 
 
 ![SAP NetWeaver Enterprise App Registration - Single Sign On Basic SAML Configuration](./img/AADEnterpriseApplicationRegistrationSAPSingleSignOnBasicConfiguration.png)
 
 ### Configure Single Sign-On (User Attributes & Claims) of the SAP Application
 1. Select the **Edit** button of the **User Attributes & Claims** section.
-2. Choose the name identifier format **Email address**, select **Attribute** and insert **user.userprincipalname** as source attribute. 
-3. After all these changes hit **Save**. 
+2. Select the **Unique User Identifier** from the list by clicking on the entry
+3. Choose the name identifier format **Email address**, select **Attribute** and insert **user.userprincipalname** as source attribute. 
+4. After all these changes hit **Save**. 
+
+> We assume that the Name ID in the SAP Netweaver is an email address and that is equal to the **user.userprincipalname**. 
+> If your scenario requires a different value, choose the correct value for your scenario e.g. **user.mail**
 
 ![SAP NetWeaver Enterprise App Registration - Single Sign On User Attributes Claims](./img/AADEnterpriseApplicationRegistrationSAPSingleSignOnUserAttributesClaims.png)
 
@@ -150,8 +163,8 @@ The final **Single Sign-On** setup should look like this:
 
 ### Configure the authentication settings of the SAP Application
 
-1. As next step we need to configure the authentication of the SAPNetweaver app. Switch to the general **App registrations** on the left bar and select **All applications**. Now you should find the SAP NetWeaver App. Select it. 
-2. Navigate to **Authentication** in the left bar. **Add a platform** and select **Web**.
+1. As next step we need to configure the authentication of the SAPNetweaver app. Go back to the Azure AD overview and switch to the general **App registrations** on the left bar and select **All applications**. Now you should find the SAP NetWeaver App. Select it. 
+2. Navigate to **Authentication** in the left bar. If not already shown: **Add a platform** and select **Web**.
 3. Add the following Redirect URIs: <br> ```https://<SAP-IP-ADDRESS>:44300/sap/saml2/sp/asc/100``` and ```https://<SAP-IP-ADDRESS>:44300/sap/bc/sec/oauth2/token``` 
 
 ![SAP Netweaver Application Registration Authentication - Part 1](./img/AADSAPAppRegistrationAuthentication1.png)
@@ -166,8 +179,8 @@ The final **Single Sign-On** setup should look like this:
 Now we need to expose our API by defining the scope and the application id uri in the implicit grand flow. 
 1. Edit the Application ID URI to this: <br> ```https://<SAP-IP-ADDRESS>:44300/sap/bc/sec/oauth2/token```
 2. **Add a scope** that looks as follows: <br> ```https://<SAP-IP-ADDRESS>:44300/sap/bc/sec/oauth2/token/user_impersonation```
-3. Set the authorized client applications by pressing **Add a client application** and adding the  **Application (client) ID** from the API application registered earlier and check the box **Authorized scopes**.  
-4. After all these changes hit *Save*. 
+3. Set the authorized client applications by pressing **Add a client application** and adding the  **Application (client) ID** from the **API application** registered earlier and *check the box* **Authorized scopes**.  
+4. After all these changes hit **Add Application**. 
 
 ![SAP Netweaver Application Registration Expose An API](./img/AADSAPAppRegistrationExposeAnAPI1.png)
 
