@@ -7,6 +7,7 @@ In this part we will configure Azure Active Directory (AAD) to be the working Id
 |[Register Application (Client App)](#register-application-client-app)|Registering the frontend application (AngularFE)|
 |[Register Application (API App)](#register-application-api-app)|Registering the API application|
 |[Register Enterprise Application (Backend: SAP NetWeaver)](#register-enterprise-application-backend-sap-netweaver)|Registering the backend application|
+|[Register Enterprise Application (Backend: SAP Cloud Platform)](#register-enterprise-application-backend-sap-netweaver)|Registering the backend application|
 
 ### Introduction 
 
