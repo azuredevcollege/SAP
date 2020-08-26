@@ -1,6 +1,38 @@
-# Azure Active Directory Identity connecting seamlessly to SAP Odata Service
+---
+title: 'Tutorial: Azure Active Directory single sign-on (SSO) integration with SAP | Microsoft Docs'
+description: Learn how to configure single sign-on between Azure Active Directory and SAP.
+services: active-directory
+author: Martha Splitthoff, Alexandra Schroeder
+manager: 
+ms.reviewer: 
+ms.service: active-directory
+ms.subservice: saas-app-tutorial
+ms.workload: identity
+ms.topic: tutorial
+ms.date: 08/26/2020
+ms.author: Martha Splitthoff, Alexandra Schroeder
+---
 
-  ## Introduction
+# Tutorial: Azure Active Directory single sign-on (SSO) integration with SAP
+
+In this tutorial, you'll learn how to integrate SAP with Azure Active Directory (Azure AD). When you integrate SAP with Azure AD, you can:
+
+* Control in Azure AD who has access to SAP.
+* Enable your users to be automatically signed-in to SAP with their Azure AD accounts.
+* Manage your accounts in one central location - the Azure portal.
+
+To learn more about SaaS app integration with Azure AD, see [What is application access and single sign-on with Azure Active Directory](https://docs.microsoft.com/azure/active-directory/manage-apps/what-is-single-sign-on).
+
+## Prerequisites
+
+To get started, you need the following items:
+
+* An Azure AD subscription. If you don't have a subscription, you can get a [free account](https://azure.microsoft.com/free/).
+* SAP single sign-on (SSO) enabled subscription.
+* We are going to use Postman to send our GET- and POST-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool. <br>
+
+
+## Scenario description
   > Modern applications running in the Cloud typically consist of many independent (micro)services. <br>
   > This architectural style enables them to rapidly respond to market conditions. <br>
   > However, such highly distributed systems also come with challenges e.g. their increased communication overhead and additional operational complexity.
@@ -11,7 +43,7 @@
   > In all cases, the user is authenticated at the frontend and when the frontend invokes a backend service, the service usually requires the user to be authenticated before accessing any data in the backend. The authenticated user is a precondition to enforce any authorization rules in the backend. Thus a single sign on is essential both from a security and user experience perspective. Thus the frontend securely forwards the user to the backend to provide a secure and seamless experience.  <br>
   > The goal of this scenario is to connect a single page application integrated in Microsoft Teams using the Azure Active Directory Tenant via OAuth2 and the SAML Bearer Assertion Flow to display content from SAP. The challenge was to connect an azure application with SAP for enterprise customers using modern authentication and authorization protocols instead of the SAML-P protocol. Important to mention is that a single sign on experience will be provided. 
 
-## Description of the Challenge
+## Description of the Tutorial
 
 1. Integrate SAP Netweaver with Azure Active Directory
 2. Build a modern architecture using OAuth2 protocols und call SAP OData Services using single sign on
@@ -58,11 +90,21 @@ This translates into these three steps:
 |Topic|Description|
 |:-----------|:------------------|
 |[Azure Active Directory Configuration](././AzureActiveDirectoryConfiguration/README.md)|Register Applications (Client App), <br> Register Application (API App), <br>Register Enterprise Application (Backend: SAP NetWeaver)|
-|[SAP Configuration](././SAPConfiguration/README.md)|Generate User, <br>Create Federation between SAP and Azure Active Directory, <br>Configure Client in SAP, <br>Configure Scopes in SAP|
+|[SAP Configuration](SAPNetWeaverConfiguration/README.md)|Generate User, <br>Create Federation between SAP and Azure Active Directory, <br>Configure Client in SAP, <br>Configure Scopes in SAP|
 |[Postman SetUp](././PostmanSetup/README.md)|GET request to receive access token from Azure Active Directory (Implicit Grant Flow), <br>POST Request to receive SAML Assertion from Azure Active Directory (On Behalf Flow), <br>POST Request using SAML Assertion to receive access token from SAP (SAML Bearer Assertion Flow), <br>GET Request using access token to receive the product data from SAP to view in application|
 
 
 <br>
 
-## References
-https://blogs.sap.com/2020/07/17/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp/
+## Additional resources
+
+- [ List of Tutorials on How to Integrate SaaS Apps with Azure Active Directory ](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+
+- [What is application access and single sign-on with Azure Active Directory? ](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+
+- [What is conditional access in Azure Active Directory?](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+
+- [Try Visibly with Azure AD](https://aad.portal.azure.com/)
+
+- [What is session control in Microsoft Cloud App Security?](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
+- https://blogs.sap.com/2020/07/17/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp/
