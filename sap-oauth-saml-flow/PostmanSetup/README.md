@@ -1,3 +1,18 @@
+---
+title: 'Tutorial: Azure Active Directory single sign-on (SSO) integration with SAP | Microsoft Docs'
+description: Learn how to configure single sign-on between Azure Active Directory and SAP.
+services: active-directory
+author: Martha Splitthoff, Alexandra Schroeder
+manager: 
+ms.reviewer: 
+ms.service: active-directory
+ms.subservice: saas-app-tutorial
+ms.workload: identity
+ms.topic: tutorial
+ms.date: 08/26/2020
+ms.author: Martha Splitthoff, Alexandra Schroeder
+---
+
 # Postman SetUp
 
 We will set up Postman to receive all necessary tokens to send an ODATA Request against our SAP NetWeaver.
@@ -162,3 +177,15 @@ Remove-AzAdApplication -ApplicationId $app.AppId -Force
 Remove-AzAdApplication -ApplicationId $sap.AppId -Force
 ```
 
+## Additional resources
+
+- [ List of Tutorials on How to Integrate SaaS Apps with Azure Active Directory ](https://docs.microsoft.com/azure/active-directory/active-directory-saas-tutorial-list)
+
+- [What is application access and single sign-on with Azure Active Directory? ](https://docs.microsoft.com/azure/active-directory/active-directory-appssoaccess-whatis)
+
+- [What is conditional access in Azure Active Directory?](https://docs.microsoft.com/azure/active-directory/conditional-access/overview)
+
+- [Try Visibly with Azure AD](https://aad.portal.azure.com/)
+
+- [What is session control in Microsoft Cloud App Security?](https://docs.microsoft.com/cloud-app-security/proxy-intro-aad)
+- https://blogs.sap.com/2020/07/17/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp/
