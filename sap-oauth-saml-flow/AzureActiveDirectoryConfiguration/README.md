@@ -113,10 +113,10 @@ For the implicit grant flow you need to get an access token from the Azure Activ
 1. Now we need to expose our API by defining the scope for the implicit grand flow. Navigate to **Expose an API**.
 2. Accept the **default** value in the **Application ID Uri**
 3. **Add a scope** that looks like this: <br> ```api://<API-APP-ID>/impersonate```.  And check the box **Admins and Users**. <br> 
-3. **Add a client application** and enter the Client Applications ID saved to the notepad in the last section. Check the box **Authorized scopes**.
+3. **Add a client application** and enter the **Client Applications ID** saved to the notepad in the last section. Check the box **Authorized scopes**.
 4. After the changes hit **Save**. 
 
-![API App Registration - Expose an API](./img/APIAADExposeapi.png)
+![API App Registration - Expose an API](./img/APIApp_AuthorizedClientApp.png)
 
 
 ## Register Enterprise Application (Backend: SAP NetWeaver)
@@ -154,10 +154,14 @@ Please proceed with the following steps:
 3. Choose the name identifier format **Email address**, select **Attribute** and insert **user.userprincipalname** as source attribute. 
 4. After all these changes hit **Save**. 
 
-> We assume that the Name ID in the SAP Netweaver is an email address and that is equal to the **user.userprincipalname**. 
-> If your scenario requires a different value, choose the correct value for your scenario e.g. **user.mail**
+> We assume that the **Name ID** in the SAP Netweaver is an **email address** and that it is equal to the **user.userprincipalname**. <br>
 
 ![SAP NetWeaver Enterprise App Registration - Single Sign On User Attributes Claims](./img/AADEnterpriseApplicationRegistrationSAPSingleSignOnUserAttributesClaims.png)
+
+> If in your scenario the **userprincipalname** differs from the **email address**, choose the correct value for your scenario e.g. **user.mail**
+
+![SAP NetWeaver Enterprise App Registration - Name ID](./img/AADSAP_emailclaim_new.png)
+
 
 ### Configure Single Sign-On (SAML Signing Certificate) of the SAP Application
 1. Click on the **Edit** Button of the **SAML Signing Certificate** section. 
