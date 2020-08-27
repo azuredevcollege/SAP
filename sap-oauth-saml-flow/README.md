@@ -30,6 +30,7 @@ To get started, you need the following items:
 * An Azure AD subscription. If you don't have a subscription, you can get a [free account](https://azure.microsoft.com/free/).
 * SAP single sign-on (SSO) enabled subscription.
 * We are going to use Postman to send our GET- and POST-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool. <br>
+* An existing user in AAD with the same email address as the user in the SAP Netweaver system.
 
 
 ## Scenario description
