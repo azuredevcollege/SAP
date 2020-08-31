@@ -67,7 +67,7 @@
 						"id": "2214a332-1b9e-499b-acc0-e6d1321afe76",
 						"exec": [
 							"var json = JSON.parse(responseBody);\r",
-							"postman.setEnvironmentVariable(\"saml-assertion\", json.assertion);"
+							"postman.setEnvironmentVariable(\"saml-assertion\", json.access_token);"
 						],
 						"type": "text/javascript"
 					}
