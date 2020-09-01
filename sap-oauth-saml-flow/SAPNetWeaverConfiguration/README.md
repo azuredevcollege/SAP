@@ -25,9 +25,8 @@ First you will set up SAP to configure the federation between SAP and AAD.
 |[Generate Role](#generate-role)|Generate a role to later assign to the user in the SAP Netweaver System|
 |[Generate Users](#generate-users)|Generate a Dialog User and a System User in the SAP Netweaver System|
 |[Federation between SAP and Azure Active Directory](#federation-between-sap-and-azure-active-directory)|Configure federation between SAP and Azure Active Directory|
+|[Configure the Scopes for OAuth 2.0](#configure-the-scope-for-oauth-2.0)|Configure the Scopes to enable access to certain OData Services|
 |[Configure Client in SAP](#configure-client-in-sap)|Configure a Client within the SAP Netweaver System|
-|[Activate the Scopes for OAuth 2.0](#activate-the-scope-for-oauth-2-0)|Configure the Scopes to enable access to certain OData Services|
-|[Configure Scopes in SAP](#configure-scopes-in-sap)|Configure the Scopes to enable access to certain OData Services|
 
 </br>
 
@@ -137,7 +136,7 @@ In this part you will configure SAP to trust AAD: <br>
 
 ![Add Email as NameID](./img/SAPNetweaverSAMLConfiguration9_new.png)
 
-## Activate the Scope for OAuth 2.0
+## Configure the Scope for OAuth 2.0
 
 1. Redirect to the Activate and Maintain Services section by using:
 ```/n/IWFND/MAINT_SERVICE```

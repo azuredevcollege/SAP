@@ -88,9 +88,6 @@ The Params should look like this:
 1. Create a **POST** request which should look like this: 
 ```https://login.microsoftonline.com/TENANT_ID/oauth2/token```
 
-
-![**POST** Request to receive SAML Assertion from Azure Active Directory (On Behalf Flow)](./img/OnBehalfOfFlow_Postman.png)
-
 2. Under the **Authorization** section choose **Bearer Token** as **Type** and leave the Token details empty.
 
 3. Fill the **Body** section of the POST request as shown in the image and/or the table further down.
