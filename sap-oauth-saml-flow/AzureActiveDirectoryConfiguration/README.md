@@ -75,11 +75,10 @@ You are free to enter more descriptive names and descriptions.
 ![Frontend App Registration - Expose an API](./img/AADClientAppRegistrationExposeAnAPI.png)
 
 ### Download the Federation metadata document
-1. We are now going to download the federation metadata document as we are going to need it later on in the SAP configuration. <br> Navigate to **Overview** of your Angular FE/Client Application registered in the AAD.
-2. Select **Endpoints**.
-3. Copy the **federation metadata document url** and save it to the notepad.
+1. We are now going to download the federation metadata document from the **Single Sign On** page of your SAP Netweaver application.
+2. Download the **Federation Metadata XML** from the**SAML Signing Certificate** tile.
 
-![Federation metadata document](./img/AADCLIENTAPPmetadata.png)
+![Federation metadata document](./img/AADSAP_SAMLman.png)
 
 ## Register Application (API App)
 

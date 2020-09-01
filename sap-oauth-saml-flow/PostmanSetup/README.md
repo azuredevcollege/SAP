@@ -29,7 +29,7 @@ We will set up Postman to receive all necessary tokens to send an ODATA Request 
 This SetUp requires the configurations made in [AAD Configuration](././AzureActiveDirectoryConfiguration/README.md) and [SAP Configuration](././SAPConfiguration/README.md). <br> 
 > If you haven't already, go back to those steps as you will get errors if the environments are not set up right. <br>
 > We are going to use Postman to send our GET- and POST-Requests, please download it [here](https://www.postman.com/downloads/) and use [Postman Learning](https://learning.postman.com/getting-started/) to familiarize yourself with the tool. <br>
-> Under [Postman_SAP_Oauth_SAML_flow.json]() you will find the importable json file containing the four requests. You can either adapt these or build them yourself.
+> In this folder you will also find the importable json files containing the four requests and the environment variables. You can either adapt these or build them yourself.
 
 ## Process
 
@@ -48,21 +48,20 @@ This SetUp requires the configurations made in [AAD Configuration](././AzureActi
 > - This allows the app to sign in the user, maintain session, and get tokens to other web APIs all within the client JavaScript code. <br>
 > - For now we are going to fetch the access/bearer token to our client application using a GET Request. <br>
 
-To do so, create a **GET Request**. Please copy this URL into a **GET** Request in your **Postman**. **Insert the blanks** (see the description in the table below). In the end the URL should look something like this: 
+1. To do so, create a **GET Request**. Please copy this URL into a **GET** Request in your **Postman**. **Insert the blanks** (see the description in the table below). In the end the URL should look something like this: 
 ```
 https://login.microsoftonline.com/<DIRECTORY_ID>/oauth2/v2.0/authorize?client_id=<CLIENT_ID>&response_type=token&redirect_uri=https://localhost:5001/api/tokenechofragment&scope=https://<API APP Client ID>/user_impersonation&response_mode=fragment&state=12345&nonce=678910
 
 ```
 
+2. Fill the **Params** of the GET request as shown in the image and/or the table further down.
+
 ![**GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow) ](./img/ImplicitGrantFlow_Postman.png)
 
-**GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow) <br>
-1. For the **Client ID** we use the **frontend angular application client id** <br>
-2. For the **scope** we use the **scope from the API APP** <br>
-3.  By pasting the URL from Postman into a Browser we will receive an **access token**, starting with ```ey...```.
-4.  **IMPORTANT:** If the website or in this case **https://localhost:5001/** is not displaying a real website, that is still correct.
-5.  Our goal is to receive the **access token** using the browser technologies.
-6.  Be sure to copy the entire access token until the **&token_type** appears to the notepad. Be aware that it will expire. You can see that in the response behing **expires_in**.
+
+3.  By pasting the URL from Postman into a Browser and sending it, we will receive an **access token**, starting with ```ey...``` in the address bar. Save this access token to the notepad.
+  > **IMPORTANT:** If the website or in this case **https://localhost:5001/** is not displaying a real website, that is still correct.
+  > Be sure to copy the entire access token until the **&token_type** appears to the notepad. Be aware that it will expire. You can see that in the response behind **expires_in**.
 
 ![Access token](./img/GETIMPLICITGRANT_URL.png)
 
@@ -70,7 +69,7 @@ The Params should look like this:
 
 |KEY|VALUE|DESCRIPTION|
 |:-----------|:------------------|:---------------------------|
-|client_id|Application (client) ID|The **Angular FE Application (client) ID** that the Azure portal - App registrations page assigned to your app.|
+|client_id|Application (client) ID|The **Client Application (client) ID** that the Azure portal - App registrations page assigned to your app.|
 |response_type|**token**|Using token here will allow your app to receive an access token immediately from the authorize endpoint without having to make a second request to the authorize endpoint. The scope parameter must contain a scope indicating which resource to issue the token for.|
 |redirect_uri|**https://localhost:5001**|The redirect_uri of your app, where authentication responses can be sent and received by your app. It must exactly match one of the redirect_uris you registered in the portal, except it must be url encoded.|
 |scope|e.g. https://**API APP Client ID**/user_impersonation - use yours from the notepad|A space-separated list of scopes. As set up in the AAD previously.|
@@ -89,10 +88,15 @@ The Params should look like this:
 1. Create a **POST** request which should look like this: 
 ```https://login.microsoftonline.com/TENANT_ID/oauth2/token```
 
+2. Under the **Authorization** section choose **Bearer Token** as **Type** and leave the Token details empty.
+
+3. Fill the **Body** section of the POST request as shown in the image and/or the table further down.
 
 ![**POST** Request to receive SAML Assertion from Azure Active Directory (On Behalf Flow)](./img/OnBehalfOfFlow_Postman.png)
 
-Please fill in the following key value pairs into the **Body** section of the **Postman**:
+4. **Send** the POST request. In the **Response** you will find another **access_token** starting with **PEF...**. Save this token to the notepad.
+
+The Body should look like this:
 
 |KEY|VALUE|DESCRIPTION|
 |:-----------|:------------------|:---------------------------|
@@ -117,9 +121,19 @@ Please fill in the following key value pairs into the **Body** section of the **
 
 1. Create a new **POST** Request in Postman. It should look like this:
 ```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/bc/sec/oauth2/token``` <br>
-2. Fill the **Body** as follows:
+
+2. Under **Authorization** enter the **client_id** with its **secret/password**.
+
+![**POST** Request using SAML Assertion to receive access token from SAP - SAP Client Authorization](./img/SAMLBearerAssertionFlow_Authorization.png)
+
+
+3. Fill the **Body** as shown in the image and/or the table further down.
 
 ![**POST** Request using SAML Assertion to receive access token from SAP (SAML Bearer Assertion Flow)](./img/SAMLBearerAssertionFlow_Postman.png)
+
+4. Send the POST request and save the received **access token** to the notepad.
+
+The Body should look like this:
 
 |KEY|VALUE|DESCRIPTION|
 |:-----------|:------------------|:---------------------------|
@@ -127,12 +141,6 @@ Please fill in the following key value pairs into the **Body** section of the **
 |grant_type|**urn:ietf:params:oauth:grant-type:saml2-bearer**|Define the grant type to be SAML 2.0 Bearer assertion. This was also set up earlier in the AAD.|
 |assertion|**<SAML 2.0 Assertion>** e.g. ```PEF...```|The SAML 2.0 assertion from the previour REST Call will have the correct audience and recipient to exchange the assertion with an access token.|
 |scope|**<SAP ODATA scope>** e.g. ```ZGWSAMPLE_BASIC_0001```|To receive the right access token to the scope created in SAP, list it here.|
-
-3. Under **Authorization** enter the **client_id** with its **secret/password**.
-
-![**POST** Request using SAML Assertion to receive access token from SAP - SAP Client Authorization](./img/SAMLBearerAssertionFlow_Authorization.png)
-
-4. Send the POST request and save the received **access token** to the notepad.
 
 
 ## ODATA REST Call
@@ -147,19 +155,23 @@ Now we will perform a **GET** Request using an access token to receive the produ
 
 The process will be performed as follows:
 
-1. Create a new GET Request in Postman. It should look like this:
+1. Create a new **GET** Request in Postman. It should look like this:
 ```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/opu/odata/iwbep/GWSAMPLE_BASIC/ProductSet```
+ <br>
 
-![**GET** Request using access token to receive the product data from SAP  to view in application](./img/ODATARequest_Postman.png) <br>
-2. Fill the **Header** as follows:
+2. Fill the **Header** as shown in the image and/or the table further down.
+
+![**GET** Request using access token to receive the product data from SAP  to view in application](./img/ODATARequest_Postman.png)
+
+3. Send the GET request. The Result should look like this:
+
+![**GET** ODATA Request - Final Result](./img/GETODATARequestSAPFinalResult.png)
+
+The Header should look like this:
 
 |KEY|VALUE|DESCRIPTION|
 |:-----------|:------------------|:---------------------------|
 |Authorization|Bearer **<access token>** (from earlier POST) |Bearer access token is a security token that grants the **“bearer”** access to a protected resource. As this token is received by the authorization server of SAP, it grants access to the SAP Data.|
-
-3. And the Result should look like this:
-
-![**GET** ODATA Request - Final Result](./img/GETODATARequestSAPFinalResult.png)
 
 ## Done and Cleanup resources
 
