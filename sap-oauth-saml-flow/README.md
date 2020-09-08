@@ -2,7 +2,7 @@
 title: 'Tutorial: Secure principal propagation between Azure Active Directory and SAP | Microsoft Docs'
 description: Learn how to configure secure principal propagation between Azure Active Directory and SAP
 services: active-directory
-author: Martha Splitthoff, Alexandra Schroeder, Martin Raepple
+author: Martha Splitthoff, Alexandra Schroeder, Andreas Mock, Martin Raepple
 manager: 
 ms.reviewer: 
 ms.service: active-directory
@@ -10,7 +10,7 @@ ms.subservice: saas-app-tutorial
 ms.workload: identity
 ms.topic: tutorial
 ms.date: 08/26/2020
-ms.author: Martha Splitthoff, Alexandra Schroeder, Martin Raepple
+ms.author: Martha Splitthoff, Alexandra Schroeder, Andreas Mock, Martin Raepple
 ---
 
 # Tutorial: Secure principal propagation between Azure Active Directory and SAP
