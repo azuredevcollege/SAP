@@ -15,6 +15,8 @@ ms.author: Martha Splitthoff, Alexandra Schroeder, Andreas Mock, Martin Raepple
 
 # Azure Active Directory Configuration
 
+## Prerequisites
+
 In this part we will configure Azure Active Directory (Azure AD) to be the working Identity Provider (IDP) for the frontend Azure Client Application (AngluarFE), API Application, and SAP backend service (option 1: SAP NetWeaver, option 2: SAP Cloud Platform).
 
 ## Introduction

@@ -13,20 +13,14 @@ ms.date: 08/26/2020
 ms.author: Martha Splitthoff, Alexandra Schroeder, Andreas Mock, Martin Raepple
 ---
 
-# SAP Configuration
+# SAP NetWeaver Configuration
+
+## Prerequisites
 
 First you will set up SAP to configure the federation between SAP and AAD.
 
 > - Please see a very detailed instruction for configuring SAP to be able to work with the AAD: <br> [Single Sign On - SAP and AAD](https://blogs.sap.com/2019/10/17/single-sign-on-for-abap-engine-with-azure-active-directory-using-oauth/) <br>
 > - Below we **highlighted the main configuration parts within SAP Netweaver**: <br>
-
-|Topic|Description|
-|:-----------|:------------------|
-|[Generate Role](#generate-role)|Generate a role to later assign to the user in the SAP Netweaver System|
-|[Generate Users](#generate-users)|Generate a Dialog User and a System User in the SAP Netweaver System|
-|[Federation between SAP and Azure Active Directory](#federation-between-sap-and-azure-active-directory)|Configure federation between SAP and Azure Active Directory|
-|[Configure the Scopes for OAuth 2.0](#configure-the-scope-for-oauth-2.0)|Configure the Scopes to enable access to certain OData Services|
-|[Configure Client in SAP](#configure-client-in-sap)|Configure a Client within the SAP Netweaver System|
 
 </br>
 

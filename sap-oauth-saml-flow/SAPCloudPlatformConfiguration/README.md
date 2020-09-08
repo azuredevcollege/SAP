@@ -15,15 +15,6 @@ ms.author: Martha Splitthoff, Alexandra Schroeder, Andreas Mock, Martin Raepple
 
 # SAP Cloud Platform (SCP) Configuration
 
-To configure SAP Cloud Platform (SCP) for this scenario, complete the following building blocks:
-
-|Topic|Description|
-|:-----------|:------------------|
-|[Deployment of the backend service](#deployment-of-the-backend-service)|You will use a simple Java servlet which returns the logged-in (propagated) principal name and additional attributes|
-|[Configuration of role collection](#configuration-of-role-collection)|Configuration of the user's authorization in the backend service|
-|[Export of SCP SAML metadata and OAuth client credentials](#export-of-scp-saml-metadata-and-oauth-client-credentials)|You will use this metadata and credentials for setting up the trust relationship in Azure AD|
-|[Setup of the trust relationship to Azure AD](#setup-of-the-trust-relationship-to-azure-ad)|Required by the SCP OAuth server to accept the SAML assertion from Azure AD|
-
 ## Prerequisites
 
 Please make sure that your local development environment meets the following prerequisites:

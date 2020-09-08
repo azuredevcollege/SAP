@@ -15,15 +15,6 @@ ms.author: Martha Splitthoff, Alexandra Schroeder, Andreas Mock, Martin Raepple
 
 # Postman Setup
 
-We will set up Postman to receive all necessary tokens to send an OData request against our SAP backend service.
-
-|Topic|Description|
-|:-----------|:------------------|
-|[**GET** Request to receive access token from Azure AD](#get-request-to-receive-access-token-from-azure-active-directory)|Usage of Implicit Grant Flow|
-|[**POST** Request to receive SAML Assertion from Azure AD](#post-request-to-receive-saml-assertion-from-azure-active-directory)|Usage of On Behalf Flow|
-|[**POST** Request using SAML Assertion to receive access token from SAP](#post-request-to-exchange-the-saml-assertion-for-the-access-token-from-oauth-authorization-server-of-sap)|Receiving SAML Bearer Assertion Flow from the OAuth Authorization Server of SAP|
-|[**GET** Request using access token to receive the user's data from SAP](#get-request-using-access-token-to-receive-the-product-data-from-sap)|REST Call to receive data from SAP|
-
 ## Prerequisites
 
 This setup requires the configurations made in [Azure AD Configuration](../AzureActiveDirectoryConfiguration/README.md) and, depending on the option you chose for this tutorial, either the configuration in [SAP NetWeaver](../SAPNetWeaverConfiguration/README.md) or [SAP Cloud Platform](../SAPCloudPlatformConfiguration/README.md). If you haven't already, go back to those steps as you will get errors if the environments are not set up right.
