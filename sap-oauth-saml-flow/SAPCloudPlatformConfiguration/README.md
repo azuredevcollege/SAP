@@ -1,6 +1,6 @@
 ---
-title: 'Tutorial: Azure Active Directory single sign-on (SSO) integration with SAP | Microsoft Docs'
-description: Learn how to configure single sign-on between Azure Active Directory and SAP.
+title: 'Tutorial: Secure principal propagation between Azure Active Directory and SAP | Microsoft Docs'
+description: Learn how to configure secure principal propagation between Azure Active Directory and SAP
 services: active-directory
 author: Alexandra Schroeder, Martha Splitthoff, Martin Raepple
 manager:
