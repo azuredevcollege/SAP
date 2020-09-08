@@ -1,0 +1,251 @@
+{
+	"info": {
+		"_postman_id": "36e0225c-2ed9-43e5-afa1-4d88be0e20ba",
+		"name": "SAP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Implicit Grant Flow",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://login.microsoftonline.com/{{aad-tenant-id}}/oauth2/v2.0/authorize?client_id={{client-app-id}}&response_type=token&redirect_uri=https://{{sap-ip-address}}:44300/sap/bc/sec/oauth2/token&scope=api://{{api-app-id}}/read&response_mode=fragment&state=12345&nonce=678910",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"{{aad-tenant-id}}",
+						"oauth2",
+						"v2.0",
+						"authorize"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "{{client-app-id}}"
+						},
+						{
+							"key": "response_type",
+							"value": "token"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://{{sap-ip-address}}:44300/sap/bc/sec/oauth2/token"
+						},
+						{
+							"key": "scope",
+							"value": "api://{{api-app-id}}/read"
+						},
+						{
+							"key": "response_mode",
+							"value": "fragment"
+						},
+						{
+							"key": "state",
+							"value": "12345"
+						},
+						{
+							"key": "nonce",
+							"value": "678910"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "On Behalf of Flow",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2214a332-1b9e-499b-acc0-e6d1321afe76",
+						"exec": [
+							"var json = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"saml-assertion\", json.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+							"type": "text"
+						},
+						{
+							"key": "assertion",
+							"value": "<ACCESS_TOKEN>",
+							"description": "add the access token that you received in the browser as answer to the implicit grant flow request",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{api-app-id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{api-app-secret}}",
+							"type": "text"
+						},
+						{
+							"key": "resource",
+							"value": "https://{{sap-ip-address}}:44300/sap/bc/sec/oauth2/token",
+							"type": "text"
+						},
+						{
+							"key": "requested_token_use",
+							"value": "on_behalf_of",
+							"type": "text"
+						},
+						{
+							"key": "requested_token_type",
+							"value": "urn:ietf:params:oauth:token-type:saml2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://login.microsoftonline.com/{{aad-tenant-id}}/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"{{aad-tenant-id}}",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SAML Bearer Assertion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "05f5fa06-71a4-419c-b452-03ae8463f076",
+						"exec": [
+							"var json = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"bearer-access-token\", json.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{sap-client-name}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{sap-client-name}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "urn:ietf:params:oauth:grant-type:saml2-bearer",
+							"type": "text"
+						},
+						{
+							"key": "assertion",
+							"value": "{{saml-assertion}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "{{sap-scope}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{sap-ip-address}}:44300/sap/bc/sec/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"{{sap-ip-address}}"
+					],
+					"port": "44300",
+					"path": [
+						"sap",
+						"bc",
+						"sec",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Odata Request",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{bearer-access-token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{sap-ip-address}}:44300/sap/opu/odata/iwbep/{{sap-scope}}/ProductSet",
+					"protocol": "https",
+					"host": [
+						"{{sap-ip-address}}"
+					],
+					"port": "44300",
+					"path": [
+						"sap",
+						"opu",
+						"odata",
+						"iwbep",
+						"{{sap-scope}}",
+						"ProductSet"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

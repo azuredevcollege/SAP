@@ -53,6 +53,8 @@ To do so, create a **GET Request**. Copy this URL into a **GET** Request in **Po
 https://login.microsoftonline.com/<DIRECTORY_ID>/oauth2/v2.0/authorize?client_id=<CLIENT_ID>&response_type=token&redirect_uri=https://localhost:5001/api/tokenechofragment&scope=https://<API APP Client ID>/user_impersonation&response_mode=fragment&state=12345&nonce=678910
 ```
 
+2. Fill the **Params** of the GET request as shown in the image and/or the table further down.
+
 ![**GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow) ](./img/ImplicitGrantFlow_Postman.png)
 
 **GET** Request to receive access token from Azure Active Directory (Implicit Grant Flow)
@@ -70,7 +72,7 @@ The Params should look like this:
 
 |PARAMETER|VALUE|DESCRIPTION|
 |:-----------|:------------------|:---------------------------|
-|client_id|Application (client) ID|The **Angular FE Application (client) ID** that the Azure portal - App registrations page assigned to your app.|
+|client_id|Application (client) ID|The **Client Application (client) ID** that the Azure portal - App registrations page assigned to your app.|
 |response_type|**token**|Using token here will allow your app to receive an access token immediately from the authorize endpoint without having to make a second request to the authorize endpoint. The scope parameter must contain a scope indicating which resource to issue the token for.|
 |redirect_uri|**https://localhost:5001**|The redirect_uri of your app, where authentication responses can be sent and received by your app. It must exactly match one of the redirect_uris you registered in the portal, except it must be url encoded.|
 |scope|e.g. https://**API APP Client ID**/user_impersonation - use yours from the notepad|A space-separated list of scopes. As set up in the AAD previously.|
@@ -89,7 +91,13 @@ To receive a SAML Bearer Assertion from Azure AD, you need to send the **access 
 1. Create a **POST** request which should look like this: 
 ```https://login.microsoftonline.com/TENANT_ID/oauth2/token```
 
+2. Under the **Authorization** section choose **Bearer Token** as **Type** and leave the Token details empty.
+
+3. Fill the **Body** section of the POST request as shown in the image and/or the table further down.
+
 ![**POST** Request to receive SAML Assertion from Azure Active Directory (On Behalf Flow)](./img/OnBehalfOfFlow_Postman.png)
+
+4. **Send** the POST request. In the **Response** you will find another **access_token** starting with **PEF...**. Save this token to the notepad.
 
 Fill in the following key value pairs into the **Body** section of the **Postman** request:
 
@@ -122,9 +130,19 @@ Fill in the following key value pairs into the **Body** section of the **Postman
 
 1. Create a new **POST** Request in Postman. It should look like this:
 ```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/bc/sec/oauth2/token``` <br>
-2. Fill the **Body** as follows:
+
+2. Under **Authorization** enter the **client_id** with its **secret/password**.
+
+![**POST** Request using SAML Assertion to receive access token from SAP - SAP Client Authorization](./img/SAMLBearerAssertionFlow_Authorization.png)
+
+
+3. Fill the **Body** as shown in the image and/or the table further down.
 
 ![**POST** Request using SAML Assertion to receive access token from SAP (SAML Bearer Assertion Flow)](./img/SAMLBearerAssertionFlow_Postman.png)
+
+4. Send the POST request and save the received **access token** to the notepad.
+
+The Body should look like this:
 
 |KEY|VALUE|DESCRIPTION|
 |:-----------|:------------------|:---------------------------|
@@ -132,14 +150,6 @@ Fill in the following key value pairs into the **Body** section of the **Postman
 |grant_type|**urn:ietf:params:oauth:grant-type:saml2-bearer**|Define the grant type to be SAML 2.0 Bearer assertion. This was also set up earlier in the AAD.|
 |assertion|**<SAML 2.0 Assertion>** e.g. ```PEF...```|The SAML 2.0 assertion from the previous request will have the correct audience and recipient to exchange the assertion with an access token.|
 |scope|**<SAP ODATA scope>** e.g. ```ZGWSAMPLE_BASIC_0001```|To receive the right access token to the scope created in SAP, list it here.|
-
-3. Under **Authorization** enter the **client_id** with its **secret/password**.
-
-![**POST** Request using SAML Assertion to receive access token from SAP - SAP Client Authorization](./img/SAMLBearerAssertionFlow_Authorization.png)
-
-4. Send the POST request and save the received **access token** to the notepad.
-
-## OData REST Call
 
 The Open Data Protocol (OData) is a data access protocol built on core protocols like HTTP and commonly accepted methodologies like REST for the web. There are various kinds of libraries and tools can be used to consume OData services. But for beginners and those who want to write their own libraries, the pure HTTP requests and responses are also very important. This documentation will not cover every feature details for OData V4 services but will try to cover various typical scenarios. If you want to have a more detailed understanding, please refer to OData Documentation.
 
@@ -152,20 +162,18 @@ Now we will perform a **GET** Request using an access token to receive the produ
 
 The process will be performed as follows:
 
-1. Create a new GET Request in Postman. It should look like this:
+1. Create a new **GET** Request in Postman. It should look like this:
 
 ```http
 https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/opu/odata/iwbep/GWSAMPLE_BASIC/ProductSet
 ```
 
 ![**GET** Request using access token to receive the product data from SAP  to view in application](./img/ODATARequest_Postman.png)
-2. Fill the **Header** as follows:
+2. Fill the **Header** as shown in the image and/or the table further down.
 
-|KEY|VALUE|DESCRIPTION|
-|:-----------|:------------------|:---------------------------|
-|Authorization|Bearer **<access token>** (from earlier POST) |Bearer access token is a security token that grants the **“bearer”** access to a protected resource. As this token is received by the authorization server of SAP, it grants access to the SAP Data.|
+![**GET** Request using access token to receive the product data from SAP  to view in application](./img/ODATARequest_Postman.png)
 
-3. And the Result should look like this:
+3. Send the GET request. The Result should look like this:
 
 ![**GET** OData Request - Final Result](./img/GETODATARequestSAPFinalResult.png)
 
@@ -212,6 +220,12 @@ For example, the service endpoint in a trial account with subdomain `98abcd76tri
 1. Click *Send*.
 
 The response from SCP shows the propagated principal’s name identifier and the additional user attributes which were successfully federated. The principal also obtained the required scopes (“Display”) in SCP to call the backend service based on the Role Collection assignment.
+
+The Header should look like this:
+
+|KEY|VALUE|DESCRIPTION|
+|:-----------|:------------------|:---------------------------|
+|Authorization|Bearer **<access token>** (from earlier POST) |Bearer access token is a security token that grants the **“bearer”** access to a protected resource. As this token is received by the authorization server of SAP, it grants access to the SAP Data.|
 
 ## Done and Cleanup resources
 

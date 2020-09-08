@@ -22,95 +22,159 @@ First you will set up SAP to configure the federation between SAP and AAD.
 
 |Topic|Description|
 |:-----------|:------------------|
-|[Generate User](#generate-user)|Generate a Dialog User in the SAP Netweaver System|
+|[Generate Role](#generate-role)|Generate a role to later assign to the user in the SAP Netweaver System|
+|[Generate Users](#generate-users)|Generate a Dialog User and a System User in the SAP Netweaver System|
 |[Federation between SAP and Azure Active Directory](#federation-between-sap-and-azure-active-directory)|Configure federation between SAP and Azure Active Directory|
+|[Configure the Scopes for OAuth 2.0](#configure-the-scope-for-oauth-2.0)|Configure the Scopes to enable access to certain OData Services|
 |[Configure Client in SAP](#configure-client-in-sap)|Configure a Client within the SAP Netweaver System|
-|[Configure Scopes in SAP](#configure-scopes-in-sap)|Configure the Scopes to enable access to certain OData Services|
 
-## Generate User
+</br>
+
+## Generate Role
 
 1. Login to the SAP NetWeaver and redirect to the role & rights section by typing the abbreviation for the role maintenance:
 ```/nPFCG```
 
 ![SAP LogIn](./img/SAPNetweaverLogIn.png)
 
+2. Navigate to **Role Maintenance** create a **Single Role** and name it **TEST_ROLE**.
 
-2. Set up a role and a user ```Jane Doe (JDoe)``` which is known by SAP and by the AAD. <br>
-The type of the user must be a **Dialog User**.<br>
-The role needs some authorizations.
+![Create Single Role](./img/SAPNetweaverRoleConfiguration_new.png)
+
+3. Add a description, **Save** the newly created role and navigate to **Authorizations**. There change the authorization data.
+
+![Change the Authorization Data](./img/SAPNetweaverRoleConfigurationAuthorization1_new.png)
+
+4. Do not select any of the shown templates. Select **Manually** in the upper bar to create two authorization objects.
+
+![Manually create authorization objects](./img/SAPNetweaverRoleConfigurationAuthorization4_new.png)
+
+5. Create two new authorization objects **S_SERVICE** and **S_SCOPE** <br>
+as the user must be assigned to a role authorized for the scopes **OA2_CLIENT** and **OA2_Scope** later on.
+
+![Authorization objects](./img/SAPNetweaverRoleConfigurationAuthorization5_new.png)
+
+6. Unfold the folders down to the scopes and change the **Authorization** values of these four scopes. </br>
+For testing, development purposes we used the "wild card" using the **"*"** in the **From** and **To** areas. The final overview should look like this:
+
+![Authorization object values](./img/SAPNetweaverRoleConfigurationAuthorization9_new.png)
+
+7. Select **Generate** in the upper bar. The Status of the role should change from **Saved** to **generated**.
 
 
-![Set up a common user between SAP and Active Directory](./img/SAPNetweaverRoleConfiguration.png)
+## Generate Users
 
+1. Redirect to the User Maintenance section by using:
+```/nSU01```
 
-3. Hit the ```Authorizations``` button.
+![User Maintenance](./img/SAPNetweaverUserSetup9.png)
 
+2. Set up a user **Jane Doe (JDoe)** which is known by SAP and by the AAD. <br>
+Select **Create**.
 
-![Set up a common user between SAP and Active Directory - Part 2](./img/SAPNetweaverRoleConfigurationAuthorization1.png)
+![Create User](./img/SAPNetweaverUserSetup.png)
 
-4. Select the ```Obect class BC_A``` button.
+3. Configure the users **Address** information. 
+> [!CAUTION] The e-mail address should be the same in the AAD. </br>
+> As we are using the mail address to match the users between AAD and SAP this is critical.
 
-![User Authorization](./img/SAPNetweaverRoleConfigurationAuthorization2.png)
+![Configure User Address](./img/SAPNetweaverUserSetup2.png)
 
+4. Now the role created before is assigned to the user. Navigate to **Roles** and add a **Role Assignment**.
 
-5. Open the ```Authorization Object S_SCOPE ``` and the ```Authorization TNL-31000500```. <br>
-The user must be assigned to a role authorized for the scopes ```OA2_CLIENT``` and ```OA2_Scope```. <br>
+![Role Assignment](./img/SAPNetweaverUserSetup3.png)
 
-![User Authorization](./img/SAPNetweaverRoleConfigurationAuthorization3.png)
+5. Search for the **Single Role** named **TEST_ROLE** and select the role created by you. **Confirm** the selection by pressing the green checkmark. Save these changes using the disk symbol in the upper bar.
 
-6. Select the ```OAuth2 Scope``` and the ```OAuth2 Client``` and give the necessary scopes which you need to access. <br>
-For testing, development purposes we used the "wild card" using the ```*``` in the **From** and **To** areas.
+![Role Assignment](./img/SAPNetweaverUserSetup6.png)
 
-![User Authorization](./img/SAPNetweaverRoleConfigurationAuthorization4.png)
+6. Navigate to **Logon Data** and create a new password for the user. Save this password to the notepad. </br>
+Make sure the **User Type** is **Dialog User**. Save all changes.
+
+![Role Assignment](./img/SAPNetweaverUserSetup8.png)
+
+7. Create a new User. Name it **Client1**.
+
+![Client User](./img/SAPNetweaverClientSetup_new.png)
+
+8. Configure this users **Logon Data** so that **User Type** is **System** and create a password for the user. Save the password to the notepad.
+
+![Client User](./img/SAPNetweaverClientSetup1_new.png)
 
 ## Federation between SAP and Azure Active Directory
 
 In order to be able to connect SAP and AAD, there needs to be a federation configured.<br>
 In this part you will configure SAP to trust AAD: <br>
-1. For the login use the **Admin User Account**: <br>
-   - Use the following Url: <br> ```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/bc/webdynpro/sap/saml2?TRUSTED_PROVIDER_TYPE=OA2#```
 
-![Login to SAPNetweaver using Admin Account](./img/SAPNetweaverAdminLogIn.png)
+1. Redirect to the SAML 2.0 Configuration by using:
+```/nSAML2```
 
-2. Then configure as follows:
-    1. Insert the OAuth-2.0-Identity-Provider: <br> ``` https://sts.windows.net/<AAD_TENANT_ID> ```
-    2. Configure the NameID format to: **E-mail**
+![SAML 2.0 Configuration](./img/SAPNetweaverSAMLConfiguration1_new.png)
 
-![Federation between SAP and Azure Active Directory](./img/SAPNetWeaverTruststellungAAD.png)
+2. Navigate to **Trusted Providers** in the upper bar. There show the **OAuth 2.0 Identity Providers**.
 
+![OAuth IDP](./img/SAPNetweaverSAMLConfiguration3_new.png)
 
-3. Configure SAML-2.0 in SAP NetWeaver
-
-![SAML Configuration - Part 1](./img/SAPNetweaverSAMLKonfiguration.png)
-
-4. After this configure the Service-Provider-Settings:
+3. Upload the **metadata file** of the SAPNetWeaver application downloaded during the AAD configuration and confirm the next steps.
+> If you have not downloaded the federation metadata document see a brief description [here](../AzureActiveDirectoryConfiguration/README.md#Download-the-Federation-metadata-document). 
 
 ![SAML Configuration - Part 2](./img/SAPNetweaverSAMLConfigurationPart2.png)
 
-5. You can automatically upload the metadata file from the AAD into SAP NetWeaver. <br>
-> If you have not saved the link to the federation metadata document see a brief description [here](../AzureActiveDirectoryConfiguration/README.md#Download-the-Federation-metadata-document). 
+4. The **Provider Name** should set to ```https://sts.windows.net/<AAD_TENANT_ID>``` automatically. Finish the OAuth 2.0 Identity Provider setup.
+
+![Provider Name](./img/SAPNetweaverSAMLConfiguration5_new.png)
+
+5. **Edit** the created trusted provider.
+
+![Edit Trusted Provider](./img/SAPNetweaverSAMLConfiguration6_new.png)
+
+6. Under **Identity Federation** press **Add** and select **E-mail**. Confirm with **OK**.
+
+![Add Email as NameID](./img/SAPNetweaverSAMLConfiguration8_new.png)
+
+7. Press **Enable** to finalize the Setup of AAD as new trusted provider for SAP NetWeaver.
+
+![Add Email as NameID](./img/SAPNetweaverSAMLConfiguration9_new.png)
+
+## Configure the Scope for OAuth 2.0
+
+1. Redirect to the Activate and Maintain Services section by using:
+```/n/IWFND/MAINT_SERVICE```
+
+![Activate and Maintain Services](./img/SAPNetweaverTS1.png) 
+
+2. Look for **ZGWSAMPLE_BASIC** and **GWSAMPLE_BASIC** under **Technical Servicename**. Check the **OAuth** box for both scopes.
+
+![ZGWSAMPLE_BASIC](./img/SAPNetweaverTS2.png) 
 
 ## Configure Client in SAP
 
-1. First login into SAP by using the following Client Url: ```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/bc/webdynpro/sap/oauth2_config#``` <br>
-2. Add a new OAuth Client which represents the Application Client from the SAP side:
-    1. Fill in a **OAuth-2.0-Client-ID** and name it e.g. CLIENT1
-    2. Check the box **SAML-2.0-Inhaber**
-    3. Check the box **Aktualisieren**
-    4. Make sure that the box **attribute client_id** is **not** checked
-    5. Configure the trustworthy Identityprovider: **OAuth-2.0-IdP**: <br>
+1. Redirect to the OAuth 2.0 Administration by using:
+```/nSOAUTH2```
+
+![OAuth2.0 Administration](./img/SAPNetweaverOauth1.png) 
+
+2. Add a new OAuth Client which represents the Application Client from the SAP side by selecting **Create**. Now search for **CLIENT1** which was previously created. Add a Description and press **Next**.
+
+![Client ID](./img/SAPNetweaverClientSetup2.png)
+
+3. Check the box **Client User ID and Password** in the **Client Authentication** section and move on to the next section.
+
+4. Check the box **Grant Type SAML 2.0 Bearer Assertion** in the **Resource Owner Authentication** section. Add ```https://sts.windows.net/<AAD_TENANT_ID>``` as **Trustes OAuth 2.0 IdP** by searching for it and than confirming. Move on to the next section.
+
+![Client ID](./img/SAPNetweaverClientSetup3.png)
+
+5. Add **Scope Assignments** by searching for and adding **BW_BICS_INA**, **GWSAMPLE_BASIC** and **ZGWSAMPLE_BASIC**. Finish the new Client creation.
+
+6. Next check the client settings. Most should be already configured right.
+    1. Check the box **SAML 2.0 Bearer**
+    2. Check the box **Client User ID and Password**
+    3. Check the box **Grant Type SAML 2.0**
+    4. Configure the trustworthy Identityprovider: **OAuth-2.0-IdP**: <br>
     ``` https://sts.windows.net/<AAD_TENANT_ID> ```
+    5. Make sure that the box **Requires Attribute "client_id"** is **not** checked
 
 ![Configure Client in SAP NetWeaver](./img/SAPNetweaverClientSetup.png)
-
-## Configure Scopes in SAP
-
-1. Configure the Scope and select the correct target. <br>
-*(Scroll down the current page.)* <br>
-2. In our sample we are using this in Postman: <br>
-```https://<SAPNETWEAVER_IP_ADDRESS>:44300/sap/opu/odata/iwbep/GWSAMPLE_BASIC/ProductSet```
-
-![Configure Scope in SAP NetWeaver](./img/SAPNetweaverScope.png)
 
 ## Next Steps
 
