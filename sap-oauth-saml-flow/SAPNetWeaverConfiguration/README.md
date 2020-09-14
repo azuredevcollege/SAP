@@ -17,9 +17,9 @@ ms.author: Martha Splitthoff, Alexandra Schroeder, Andreas Mock, Martin Raepple
 
 ## Prerequisites
 
-First you will set up SAP to configure the federation between SAP and AAD.
+First you will set up SAP to configure the federation between SAP and Azure AD.
 
-> - Please see a very detailed instruction for configuring SAP to be able to work with the AAD: <br> [Single Sign On - SAP and AAD](https://blogs.sap.com/2019/10/17/single-sign-on-for-abap-engine-with-azure-active-directory-using-oauth/) <br>
+> - Please see a very detailed instruction for configuring SAP to be able to work with the Azure AD: <br> [Single Sign On - SAP and Azure AD](https://blogs.sap.com/2019/10/17/single-sign-on-for-abap-engine-with-azure-active-directory-using-oauth/) <br>
 > - Below we **highlighted the main configuration parts within SAP Netweaver**: <br>
 
 </br>
@@ -63,14 +63,14 @@ For testing, development purposes we used the "wild card" using the **"*"** in t
 
 ![User Maintenance](./img/SAPNetweaverUserSetup9.png)
 
-2. Set up a user **Jane Doe (JDoe)** which is known by SAP and by the AAD. <br>
+2. Set up a user **Jane Doe (JDoe)** which is known by SAP and by the Azure AD. <br>
 Select **Create**.
 
 ![Create User](./img/SAPNetweaverUserSetup.png)
 
 3. Configure the users **Address** information. 
-> [!CAUTION] The e-mail address should be the same in the AAD. </br>
-> As we are using the mail address to match the users between AAD and SAP this is critical.
+> [!CAUTION] The e-mail address should be the same in Azure AD. </br>
+> As we are using the mail address to match the users between Azure AD and SAP this is critical.
 
 ![Configure User Address](./img/SAPNetweaverUserSetup2.png)
 
@@ -97,8 +97,8 @@ Make sure the **User Type** is **Dialog User**. Save all changes.
 
 ## Federation between SAP and Azure Active Directory
 
-In order to be able to connect SAP and AAD, there needs to be a federation configured.<br>
-In this part you will configure SAP to trust AAD: <br>
+In order to be able to connect SAP and Azure AD, there needs to be a federation configured.<br>
+In this part you will configure SAP to trust Azure AD: <br>
 
 1. Redirect to the SAML 2.0 Configuration by using:
 ```/nSAML2```
@@ -109,7 +109,7 @@ In this part you will configure SAP to trust AAD: <br>
 
 ![OAuth IDP](./img/SAPNetweaverSAMLConfiguration3_new.png)
 
-3. Upload the **metadata file** of the SAPNetWeaver application downloaded during the AAD configuration and confirm the next steps.
+3. Upload the **metadata file** of the SAPNetWeaver application downloaded during the Azure AD configuration and confirm the next steps.
 > If you have not downloaded the federation metadata document see a brief description [here](../AzureActiveDirectoryConfiguration/README.md#Download-the-Federation-metadata-document). 
 
 ![SAML Configuration - Part 2](./img/SAPNetweaverSAMLConfigurationPart2.png)
@@ -126,7 +126,7 @@ In this part you will configure SAP to trust AAD: <br>
 
 ![Add Email as NameID](./img/SAPNetweaverSAMLConfiguration8_new.png)
 
-7. Press **Enable** to finalize the Setup of AAD as new trusted provider for SAP NetWeaver.
+7. Press **Enable** to finalize the Setup of Azure AD as new trusted provider for SAP NetWeaver.
 
 ![Add Email as NameID](./img/SAPNetweaverSAMLConfiguration9_new.png)
 

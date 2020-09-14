@@ -188,7 +188,7 @@ You will use Maven to create the Java project structure for your backend service
     @Test
     public void testService()
     { 
-        given().when().get("/hello").then().statusCode(403);
+        given().get("/hello");
     }
     ```
 
@@ -199,10 +199,12 @@ You will use Maven to create the Java project structure for your backend service
 1. Deploy the backend service to your subaccount with the command `cf push`
 1. After successful deployment, check that the service has started with the command `cf apps`
 ![Service status](./img/SCP2.jpg)
+1. Do a quick test and invoke the `url` returned by the previous command in a browser tab. You should see a response **Forbidden**, because the service url requires an authenticated user.
 
 ## Configuration of role collection
 Upon successful deployment of the backend service in SCP, the role and role collection settings for the service must be configured. The role collection is used later in the setup process to assign the permissions to the propagated principal.
-1. Open the [SCP Cockpit](https://cockpit.hanatrial.ondemand.com/cockpit) in your browser and login with your account admin. Navigate to the dev space in your trial account and select **Security – Roles** from the left side navigation menu. Click on **+** to create a new role.
+1. Open the [SCP Cockpit](https://cockpit.hanatrial.ondemand.com/cockpit) in your browser and login with your account admin. Navigate to your (trial) subaccount and select **Security – Roles** from the left side navigation menu. Click on **Add Using Same Role Template** to create a new role for the `service` application.
+![Add role](./img/SCP2-1.jpg)
 1. Enter `Viewer` as the new role name and click **Next**. Continue with the configuration of the role attributes, which were defined by the `Viewer` role template in the `xs-security.json` file. In this scenario, the source of each attribute is the identity provider that originally authenticated the user, so Azure AD. Enter the following source attribute mappings:
     * country: `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/country`
     * emailaddress: `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`
@@ -213,15 +215,15 @@ Upon successful deployment of the backend service in SCP, the role and role coll
     ![Attribute mappings](./img/SCP3.jpg)
     Click **Next**.
 1. Leave the Role Collection selection empty for now, click **Next** and then **Finish**.The assignment to the role collection will be done in the next steps.
-1. In the Cloud Cockpit, navigate back to the (trial) subaccount level via the breadcromb naviagtion on the top, select **Security – Role Collections** in the navigation menu, and click on **New Role Collection**
-1. Enter a name for the new Role Collection (e.g. `Application User`), click **Save**, and select the new Role Collection from the list. Click on **Add Role** and select the newly created Role `Viewer` from the `service` application. Confirm the changes with **Save**.
-
+1. Select **Security – Role Collections** from the navigation menu, and click on **+** on the right to create a new role collection.
+1. Enter a name for the new Role Collection (e.g. `Application User`), click **Create**, and select the new Role Collection from the list. Click on **Edit** and select the newly created Role `Viewer` from the `service` application in the **Role Name** dropdown box. Confirm the changes with **Save**.
+    ![Role collection](./img/SCP3-1.jpg)
 ## Export of SCP SAML metadata and OAuth client credentials
 
-1. Select **Security – Trust Configuration** from the navigation menu and click on SAML Metadata to export your (trial) subaccount’s service provider (SP) SAML metadata. Remember where the XML-file is saved – it is used later in Azure AD to simplify the trust setup.
+1. Go back to the subaccount level and select **Security – Trust Configuration** from the navigation menu and click on **SAML Metadata** to export your (trial) subaccount’s service provider (SP) SAML metadata. Remember where the XML-file is saved – it is used later in Azure AD to simplify the trust setup.
     ![Metadata export](./img/SCP4.jpg)
-1. Look up the OAuth client credentials from the service binding between the `service` app and the `XSUAA` service instance. These settings are required later to successfully request an OAuth access token from Azure with the Azure AD-generated SAML assertion. Select **Spaces** from the navigation menu and then your **dev** space. In **Services – Service Instances**, select the `service-xsuaa` instance.
-1. Click on **Show sensitive data**, and copy the values for the following binding properties, e.g. in a temporary text file:
+1. Look up the OAuth client credentials from the service binding between the `service` app and the `XSUAA` service instance. These settings are required later to successfully request an OAuth access token from Azure with the Azure AD-generated SAML assertion. Select **Services – Service Instances** and then the `service-xsuaa` instance.
+1. Select `service` from the **Bound Applications** list and click on **Show sensitive data**. Copy the values for the following binding properties, e.g. in a temporary text file:
 
     * clientid
     * clientsecret
@@ -231,13 +233,13 @@ Upon successful deployment of the backend service in SCP, the role and role coll
 ## Setup of the trust relationship to Azure AD
 The trust relationship for SAML is bi-directional. In this step, the exported metadata file from Azure AD will be imported into the SCP subaccount to finalize the trust setup.
 
-1. Navigate back to the (trial) subaccount level via the breadcromb naviagtion on the top in the SAP Cloud Cockpit, select **Security – Trust Configuration** from the navigation menu, and click **New Trust Configuration**
+1. Navigate back to the (trial) subaccount level via the breadcrumb navigation on the top in the SAP Cloud Cockpit, select **Security – Trust Configuration** from the navigation menu, and click **New Trust Configuration**
 1. Upload the SAML metadata file you exported from Azure AD and click on **Parse**. Enter a name for the new trust configuration (e.g. `Contoso Azure AD`) and deactivate the checkbox **Available for User Logon**, because this Identity Provider is only trusted for non-interactive backchannel SSO, and not for normal user login/SSO.
 ![XSUAA Client Credentials](./img/SCP6.jpg)
 Click **Save**.
-1. Configure the authorizations of a user you’ll use for testing with the new trust configuration. Select **Role Collection Assignment** from the navigation menu, and enter the e-mail address of a test user in Azure AD you will use for testing. Then click Show **Assignments**
-1. There are no role collections assigned to the user yet. Therefore, click **Assign Role Collection**.
-1. If the user has never logged in to the XSUAA tenant before, you will have to confirm the dialog to add the user first.
+1. Configure the authorizations of a user you’ll use for testing with the new trust configuration. Select the newly created trust configuration from the list, and select **Role Collection Assignment** from the navigation menu. Enter the e-mail address of a test user in Azure AD (e.g. jdoe@contoso.com) you will use for testing. Then click Show **Assignments**
+1. If the user has never logged in to the XSUAA tenant before, you will have to confirm the dialog to **Add** the user first.
+1. Click **Assign Role Collection**.
 1. Finally, select the Role Collection `Application User` created in the previous step from the drop down list, and click **Assign Role Collection**.
 
 ## Next Steps
