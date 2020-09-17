@@ -15,7 +15,7 @@ ms.author: Martha Splitthoff, Alexandra Schroeder, Andreas Mock, Martin Raepple
 
 # Tutorial: Secure principal propagation between Azure Active Directory and SAP
 
-In this tutorial, you'll learn how to integrate SAP with Azure Active Directory (Azure AD). The tutorial offers two options:
+In this tutorial, you'll learn how to implement secure principal propagation between Azure Active Directory (Azure AD) and SAP. The tutorial offers two options:
 
 * Option 1: Integrate with SAP NetWeaver to consume an OData service
 * Option 2: Integrate with SAP Cloud Platform to consume a RESTful service
@@ -49,7 +49,7 @@ Users are authenticated at the frontend by entering their credentials into a log
 
 > [!NOTE] In all cases, the user is authenticated at the frontend and when the frontend invokes a backend service, the service usually requires the user to be authenticated before accessing any data in the backend. The authenticated user is a precondition to enforce any authorization rules in the backend. Thus a single sign-on is essential both from a security and user experience perspective, and the frontend securely and *silently* (i.e. without any UI interaction by the user for authentication) forwards or propagates the already authenticated user to the backend to provide a secure and seamless experience. This mechanism is also referred to as user or ***principal propagation***.
 
-The goal of this scenario is to connect a Single Page Application (SPA) integrated in Microsoft Teams using the Azure Active Directory Tenant via OAuth 2.0 and the [SAML Bearer Assertion Flow](https://tools.ietf.org/html/rfc7522) to retrieve the user's data in SAP. Using these protocols helps to avoid any UI interaction by the user to authenticate the call to SAP.
+The goal of this scenario is to connect a Single Page Application (SPA) using the Azure Active Directory Tenant via OAuth 2.0 and the [SAML Bearer Assertion Flow](https://tools.ietf.org/html/rfc7522) to retrieve the user's data in SAP. Using these protocols helps to avoid any UI interaction by the user to authenticate the call to SAP.
 
 ## Description of the Tutorial
 
@@ -63,7 +63,7 @@ The goal of this scenario is to connect a Single Page Application (SPA) integrat
 
 The end-to-end process of a user authenticating at the frontend and accessing the user's data in the backend needs the following steps to perform authorization checks:
 
-1. The user (Jane Doe, jdoe@contoso.com) accesses a protected resource of the frontend (written in JavaScript using popular UI frameworks such as Angular) in the web application e.g. an App Service instance in an Azure subscription. The web application’s frontend is registered in the subscription’s Azure AD  tenant and in this scenario it is called Angular FE/Client Application. An API application also registered in the AAD implements the controller logic and delegates authentication to the tenant.
+1. The user (Jane Doe, jdoe@contoso.com) accesses a protected resource of the frontend (written in JavaScript using popular UI frameworks such as Angular) in the web application e.g. an App Service instance in an Azure subscription. The web application’s frontend is registered in the subscription’s Azure AD  tenant and in this scenario it is called Angular FE/Client Application. An API application also registered in the Azure AD tenant simulates the controller logic and delegates authentication to the tenant.
 2. The user's browser is redirected by the API application to the Azure AD tenant’s OAuth authorization endpoint ```(https://login.microsoftonline.com/<TENANT_ID>/oauth2/v2.0/authorize)```. Now the user is entering their credentials and is giving consent to the requested permissions or *scopes* of the API application.
 3. Once the user is successfully authenticated, the user's browser receives the access token in response from the authorization endpoint if the app is registered for the OAuth implicit grant flow in AAD. The OAuth implicit grant flow simplifies obtaining the access token for modern apps that implement an SPA frontend. Otherwise, the application uses the authorization code grant flow, where Azure AD first sends back an authorization code to the application which it redeems for an access token and refresh token by sending a POST request to the tenant’s token endpoint.
  ```(https://login.microsoftonline.com/<TENANT_ID>/oauth2/v2.0/token)```
