@@ -185,11 +185,11 @@ The final **Single Sign-On** setup should look like this:
 ### Configure the authentication settings
 
 1. As next step we need to configure the authentication of the SAP NetWeaver app. Go back to the Azure AD overview and switch to the general **App registrations** on the left bar and select **All applications**. Now you should find the SAP NetWeaver App. Select it. 
-2. Navigate to **Authentication** in the left bar. If not already shown: **Add a platform** and select **Web**.
-3. Add the following Redirect URIs: ```https://<SAP-IP-ADDRESS>:44300/sap/saml2/sp/asc/100``` and ```https://<SAP-IP-ADDRESS>:44300/sap/bc/sec/oauth2/token```
+1. Navigate to **Authentication** in the left bar. If not already shown: **Add a platform** and select **Web**.
+1. Add the following Redirect URIs: ```https://<SAP-IP-ADDRESS>:44300/sap/saml2/sp/asc/100``` and ```https://<SAP-IP-ADDRESS>:44300/sap/bc/sec/oauth2/token```
 ![SAP NetWeaver Application Registration Authentication - Part 1](./img/AADSAPAppRegistrationAuthentication1.png)
-4. Check the boxes of **Access tokens** and **ID tokens**.
-5. After all these changes hit **Save**.
+1. Check the boxes of **Access tokens** and **ID tokens**.
+1. After all these changes hit **Save**.
 
 ![SAP NetWeaver Application Registration Authentication - Part 2](./img/AADSAPAppRegistrationAuthentication2.png)
 

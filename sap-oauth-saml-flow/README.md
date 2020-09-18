@@ -54,8 +54,8 @@ The goal of this scenario is to connect a Single Page Application (SPA) using th
 ## Description of the Tutorial
 
 1. Integrate SAP NetWeaver (Option 1) or SAP Cloud Platform (Option 2) with Azure AD.
-2. Build a modern architecture using OAuth 2.0 protocols und call SAP services using single sign-on without requiring further user interface (UI) interaction by the user.
-3. Integrate the single page application in Microsoft Teams.
+1. Build a modern architecture using OAuth 2.0 protocols und call SAP services using single sign-on without requiring further user interface (UI) interaction by the user.
+1. Integrate the single page application in Microsoft Teams.
 
 ![SAP OAuth SAML Flow](./img/Architecture.png)
 
