@@ -19,10 +19,8 @@ ms.author: Martha Splitthoff, Alexandra Schroeder, Andreas Mock, Martin Raepple
 
 First you will set up SAP to configure the federation between SAP and Azure AD.
 
-> - Please see a very detailed instruction for configuring SAP to be able to work with the Azure AD: <br> [Single Sign On - SAP and Azure AD](https://blogs.sap.com/2019/10/17/single-sign-on-for-abap-engine-with-azure-active-directory-using-oauth/) <br>
-> - Below we **highlighted the main configuration parts within SAP Netweaver**: <br>
-
-</br>
+> - Please see a very detailed instruction for configuring SAP to be able to work with the Azure AD: [Single Sign On - SAP and Azure AD](https://blogs.sap.com/2019/10/17/single-sign-on-for-abap-engine-with-azure-active-directory-using-oauth/)
+> - Below we **highlighted the main configuration parts within SAP Netweaver**:
 
 ## Generate Role
 
@@ -43,12 +41,12 @@ First you will set up SAP to configure the federation between SAP and Azure AD.
 
 ![Manually create authorization objects](./img/SAPNetweaverRoleConfigurationAuthorization4_new.png)
 
-5. Create two new authorization objects **S_SERVICE** and **S_SCOPE** <br>
+5. Create two new authorization objects **S_SERVICE** and **S_SCOPE** 
 as the user must be assigned to a role authorized for the scopes **OA2_CLIENT** and **OA2_Scope** later on.
 
 ![Authorization objects](./img/SAPNetweaverRoleConfigurationAuthorization5_new.png)
 
-6. Unfold the folders down to the scopes and change the **Authorization** values of these four scopes. </br>
+6. Unfold the folders down to the scopes and change the **Authorization** values of these four scopes.
 For testing, development purposes we used the "wild card" using the **"*"** in the **From** and **To** areas. The final overview should look like this:
 
 ![Authorization object values](./img/SAPNetweaverRoleConfigurationAuthorization9_new.png)
@@ -63,13 +61,13 @@ For testing, development purposes we used the "wild card" using the **"*"** in t
 
 ![User Maintenance](./img/SAPNetweaverUserSetup9.png)
 
-2. Set up a user **Jane Doe (JDoe)** which is known by SAP and by the Azure AD. <br>
+2. Set up a user **Jane Doe (JDoe)** which is known by SAP and by the Azure AD.
 Select **Create**.
 
 ![Create User](./img/SAPNetweaverUserSetup.png)
 
 3. Configure the users **Address** information. 
-> [!CAUTION] The e-mail address should be the same in Azure AD. </br>
+> [!CAUTION] The e-mail address should be the same in Azure AD.
 > As we are using the mail address to match the users between Azure AD and SAP this is critical.
 
 ![Configure User Address](./img/SAPNetweaverUserSetup2.png)
@@ -82,7 +80,7 @@ Select **Create**.
 
 ![Role Assignment](./img/SAPNetweaverUserSetup6.png)
 
-6. Navigate to **Logon Data** and create a new password for the user. Save this password to the notepad. </br>
+6. Navigate to **Logon Data** and create a new password for the user. Save this password to the notepad.
 Make sure the **User Type** is **Dialog User**. Save all changes.
 
 ![Role Assignment](./img/SAPNetweaverUserSetup8.png)
@@ -97,8 +95,8 @@ Make sure the **User Type** is **Dialog User**. Save all changes.
 
 ## Federation between SAP and Azure Active Directory
 
-In order to be able to connect SAP and Azure AD, there needs to be a federation configured.<br>
-In this part you will configure SAP to trust Azure AD: <br>
+In order to be able to connect SAP and Azure AD, there needs to be a federation configured.
+In this part you will configure SAP to trust Azure AD:
 
 1. Redirect to the SAML 2.0 Configuration by using:
 ```/nSAML2```
@@ -162,11 +160,11 @@ In this part you will configure SAP to trust Azure AD: <br>
 
 6. Next check the client settings. Most should be already configured right.
     1. Check the box **SAML 2.0 Bearer**
-    2. Check the box **Client User ID and Password**
-    3. Check the box **Grant Type SAML 2.0**
-    4. Configure the trustworthy Identityprovider: **OAuth-2.0-IdP**: <br>
+    1. Check the box **Client User ID and Password**
+    1. Check the box **Grant Type SAML 2.0**
+    1. Configure the trustworthy Identityprovider: **OAuth-2.0-IdP**:
     ``` https://sts.windows.net/<AAD_TENANT_ID> ```
-    5. Make sure that the box **Requires Attribute "client_id"** is **not** checked
+    1. Make sure that the box **Requires Attribute "client_id"** is **not** checked
 
 ![Configure Client in SAP NetWeaver](./img/SAPNetweaverClientSetup.png)
 
